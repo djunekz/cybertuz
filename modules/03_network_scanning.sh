@@ -601,3 +601,6 @@ lab_whois_dns() {
     fi
     pause_modul
 }
+
+# Jalankan menu utama modul
+menu_recon

@@ -603,3 +603,6 @@ lab_koneksi_lokal() {
     cat /etc/resolv.conf 2>/dev/null || echo "  /etc/resolv.conf tidak ada"
     pause_modul
 }
+
+# Jalankan menu utama modul
+menu_jaringan

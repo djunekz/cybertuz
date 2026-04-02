@@ -592,3 +592,6 @@ quiz_dasar() {
     fi
     pause_modul
 }
+
+# Jalankan menu utama modul
+menu_dasar
