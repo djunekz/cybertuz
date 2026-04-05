@@ -20,6 +20,7 @@ source "$CYBERTUZ_DIR/lang.sh"
 if ! ct_load_lang; then
     ct_choose_language
 fi
+export CYBERTUZ_LANG
 
 log_action() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_DIR/cybertuz.log"
@@ -124,6 +125,7 @@ main_menu() {
             17) bash "$MODULES_DIR/17_misi_tugas.sh" ;;
             L|l)
                 ct_choose_language
+                export CYBERTUZ_LANG
                 log_action "Language changed to: $CT_LANG_NAME"
                 ;;
             0)
