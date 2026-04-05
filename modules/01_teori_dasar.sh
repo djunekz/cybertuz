@@ -22,17 +22,17 @@ pause_modul() {
 menu_dasar() {
     while true; do
         clear
-        echo -e "${RED}=== $CT_M1 ===${RESET}"
+        echo -e "${RED}=== $CT_MOD_HDR_1 ===${RESET}"
         echo ""
-        echo -e "  ${GREEN}[1]${RESET}  Apa itu Cyber Security?"
-        echo -e "  ${GREEN}[2]${RESET}  CIA Triad (Confidentiality, Integrity, Availability)"
-        echo -e "  ${GREEN}[3]${RESET}  Jenis-Jenis Ancaman Siber"
-        echo -e "  ${GREEN}[4]${RESET}  Konsep Attack Surface dan Attack Vector"
-        echo -e "  ${GREEN}[5]${RESET}  Ethical Hacking dan Penetration Testing"
-        echo -e "  ${GREEN}[6]${RESET}  Terminologi Penting Cyber Security"
-        echo -e "  ${GREEN}[7]${RESET}  Hukum dan Etika dalam Cyber Security"
-        echo -e "  ${GREEN}[8]${RESET}  Karir di Bidang Cyber Security"
-        echo -e "  ${GREEN}[9]${RESET}  Quiz Dasar Cyber Security"
+        echo -e "  ${GREEN}[1]${RESET}  $CT_M1_1"
+        echo -e "  ${GREEN}[2]${RESET}  $CT_M1_2"
+        echo -e "  ${GREEN}[3]${RESET}  $CT_M1_3"
+        echo -e "  ${GREEN}[4]${RESET}  $CT_M1_4"
+        echo -e "  ${GREEN}[5]${RESET}  $CT_M1_5"
+        echo -e "  ${GREEN}[6]${RESET}  $CT_M1_6"
+        echo -e "  ${GREEN}[7]${RESET}  $CT_M1_7"
+        echo -e "  ${GREEN}[8]${RESET}  $CT_M1_8"
+        echo -e "  ${GREEN}[9]${RESET}  $CT_M1_9"
         echo -e "  ${RED}[0]${RESET}  $CT_BACK"
         echo ""
         echo -ne "  ${CYAN}$CT_MPROMPT${RESET}"
@@ -502,7 +502,7 @@ belajar_karir() {
 
 quiz_dasar() {
     clear
-    echo -e "${YELLOW}=== QUIZ: $CT_M1 ===${RESET}"
+    echo -e "${YELLOW}=== QUIZ: $CT_MOD_HDR_1 ===${RESET}"
     echo ""
     local score=0
     local total=5

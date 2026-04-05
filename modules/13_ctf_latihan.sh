@@ -246,7 +246,7 @@ while true; do
     echo -e "${GREEN}  [2] Challenge 2: Hash Cracking${RESET}"
     echo -e "${GREEN}  [3] Challenge 3: Networking Quiz${RESET}"
     echo -e "${GREEN}  [4] Challenge 4: Web Security${RESET}"
-    echo -e "${GREEN}  [5] Lihat Skor & Platform CTF${RESET}"
+    echo -e "${GREEN}  [5] $CT_M13_5${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  $CT_MPROMPT${RESET}"
