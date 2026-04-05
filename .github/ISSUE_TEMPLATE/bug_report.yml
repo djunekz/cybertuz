@@ -1,0 +1,125 @@
+name: Bug Report
+description: Report a bug or unexpected behavior in CyberTuz
+title: "[BUG] "
+labels: ["bug"]
+assignees:
+  - djunekz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill in as much detail as possible to help us reproduce and fix it.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug.
+      placeholder: Describe what is wrong...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the behavior.
+      placeholder: |
+        1. Run bash cybertuz.sh
+        2. Select module...
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened.
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Terminal Output
+      description: Paste the exact error message or terminal output.
+      render: shell
+
+  - type: input
+    id: termux_version
+    attributes:
+      label: Termux Version
+      placeholder: e.g., 0.118.0
+    validations:
+      required: false
+
+  - type: input
+    id: android_version
+    attributes:
+      label: Android Version
+      placeholder: e.g., Android 13
+    validations:
+      required: false
+
+  - type: input
+    id: bash_version
+    attributes:
+      label: Bash Version
+      description: Output of `bash --version`
+      placeholder: e.g., GNU bash 5.1.16
+    validations:
+      required: false
+
+  - type: input
+    id: affected_module
+    attributes:
+      label: Affected Module
+      placeholder: e.g., Module 05 - Web Security, Training Arena Level 3
+    validations:
+      required: false
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Selected Language
+      options:
+        - English
+        - Indonesia
+        - Hindi
+        - Bahasa Melayu
+        - Russian
+        - Chinese Simplified
+        - Japanese
+        - Thai
+        - Vietnamese
+        - Arabic
+        - Spanish
+        - Italian
+        - Korean
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information that might help.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before Submitting
+      options:
+        - label: I have checked the [FAQ](../FAQ.md) and [TROUBLESHOOTING](../TROUBLESHOOTING.md) guide
+          required: true
+        - label: I have searched existing issues and this is not a duplicate
+          required: true

@@ -1,0 +1,77 @@
+name: Feature Request
+description: Suggest a new feature, module, language, or improvement
+title: "[FEATURE] "
+labels: ["enhancement"]
+assignees:
+  - djunekz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to make CyberTuz better? We'd love to hear it! Please provide as much detail as possible.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A clear, one-sentence summary of the feature you want.
+      placeholder: Add a new module for cloud security basics...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem does this solve? Why is this feature needed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the feature in detail. How should it work? What should the user experience be?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered other approaches?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Module or Area
+      description: Which part of CyberTuz does this relate to?
+      options:
+        - New module
+        - Existing module (describe in solution)
+        - Language / translation
+        - Training Arena (Module 16)
+        - Mission System (Module 17)
+        - Main launcher / menu
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Mockups, references, or any other relevant information.
+
+  - type: checkboxes
+    id: ethics
+    attributes:
+      label: Ethical Use Confirmation
+      options:
+        - label: This feature serves a legitimate educational purpose
+          required: true
+        - label: This feature does not facilitate unauthorized access to systems
+          required: true
+        - label: I have read the [Code of Conduct](../CODE_OF_CONDUCT.md)
+          required: true

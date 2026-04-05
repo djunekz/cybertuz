@@ -1,0 +1,87 @@
+name: Support Request
+description: Ask a question or get help using CyberTuz
+title: "[SUPPORT] "
+labels: ["question"]
+assignees:
+  - djunekz
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help? Please fill in the details below. Before submitting, check [README.md](../../README.md), [FAQ.md](../../FAQ.md), and [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md) first.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: What do you need help with?
+      description: Describe your question or problem clearly.
+      placeholder: I am having trouble with...
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you already tried?
+      description: Tell us what steps you have already taken.
+
+  - type: input
+    id: module
+    attributes:
+      label: Module or Area
+      placeholder: e.g., Module 03, Training Arena, language selection
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Selected Language
+      options:
+        - English
+        - Indonesia
+        - Hindi
+        - Bahasa Melayu
+        - Russian
+        - Chinese Simplified
+        - Japanese
+        - Thai
+        - Vietnamese
+        - Arabic
+        - Spanish
+        - Italian
+        - Korean
+        - Not set / unsure
+
+  - type: input
+    id: termux_version
+    attributes:
+      label: Termux Version
+      placeholder: e.g., 0.118.0
+
+  - type: input
+    id: android_version
+    attributes:
+      label: Android Version
+      placeholder: e.g., Android 13
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Terminal Output (if applicable)
+      description: Paste any relevant terminal output or error messages.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Anything else that might help us assist you.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before Submitting
+      options:
+        - label: I have checked the [FAQ](../../FAQ.md) and [TROUBLESHOOTING](../../TROUBLESHOOTING.md) guide
+          required: true
+        - label: I have searched existing issues and this question has not been answered
+          required: true

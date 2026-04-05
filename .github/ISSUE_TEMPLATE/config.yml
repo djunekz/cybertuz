@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: FAQ
+    url: https://github.com/djunekz/cybertuz/blob/main/FAQ.md
+    about: Check the FAQ before opening an issue — your question may already be answered.
+  - name: Troubleshooting Guide
+    url: https://github.com/djunekz/cybertuz/blob/main/TROUBLESHOOTING.md
+    about: Stuck on installation or a module not working? Check the troubleshooting guide first.
+  - name: Security Vulnerability
+    url: https://github.com/djunekz/cybertuz/security/advisories/new
+    about: Report a security vulnerability privately using GitHub Security Advisories.
