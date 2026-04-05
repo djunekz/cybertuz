@@ -39,16 +39,12 @@ CyberTuz is a free, open-source, terminal-based cyber security learning platform
 
 - Android device with [Termux](https://termux.dev) installed
 - Bash 4.0 or later (included in Termux)
+- Python 3.8+
 - Optional tools for live practice: `nmap`, `curl`, `dig`, `whois`, `python3`
 
 ---
 
 ## Installation
-```bash
-pip install cybertuz
-```
-or
-
 ```bash
 # Update Termux packages
 pkg update && pkg upgrade -y
@@ -56,17 +52,54 @@ pkg update && pkg upgrade -y
 # Install required tools (optional but recommended)
 pkg install -y nmap curl dnsutils whois python3 git
 
-# Clone the repository
-git clone https://github.com/djunekz/cybertuz
+```
 
-# Enter directory
+### Option 1: pip (recommended)
+
+```bash
+pip install cybertuz
+```
+
+Then simply run:
+
+```bash
+cybertuz
+```
+
+### Option 2: Manual (Termux / Linux)
+
+```bash
+# Clone repository
+git clone https://github.com/djunekz/cybertuz
 cd cybertuz
 
-# Give execute permission
-chmod +x cybertuz.sh
+# Run installer (adds `cybertuz` command to PATH)
+bash install.sh
 
-# Run CyberTuz
+# Then run from anywhere:
+cybertuz
+```
+
+### Option 3: Direct run (no install)
+
+```bash
+git clone https://github.com/djunekz/cybertuz
+cd cybertuz
 bash cybertuz.sh
+```
+
+---
+
+## Uninstall
+
+### pip install:
+```bash
+pip uninstall cybertuz
+```
+
+### Manual install:
+```bash
+bash install.sh --uninstall
 ```
 
 ---
@@ -75,6 +108,12 @@ bash cybertuz.sh
 
 ```bash
 bash cybertuz.sh
+```
+
+or
+
+```bash
+cybertuz
 ```
 
 On first launch, you will be greeted with a **welcome screen in English** and prompted to **select your language**. Your choice is saved automatically and used for all future sessions.
@@ -197,6 +236,7 @@ Made with dedication by **djunekz**
 
 - GitHub: [@djunekz](https://github.com/djunekz)
 - Repository: [github.com/djunekz/cybertuz](https://github.com/djunekz/cybertuz)
+- Issues: [issues](https://github.com/djunekz/cybertuz/issues)
 
 ---
 
