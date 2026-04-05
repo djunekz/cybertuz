@@ -1,3 +1,24 @@
+#!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+WHITE='\033[1;37m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
+pause_modul() {
+    echo ""
+    echo -ne "${DIM}  $CT_ENTER${RESET}"
+    read -r
+}
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -26,9 +47,9 @@ menu_jaringan() {
         echo -e "  ${GREEN}[7]${RESET}  Packet Analysis dengan Simulasi"
         echo -e "  ${GREEN}[8]${RESET}  Simulasi Jaringan Interaktif"
         echo -e "  ${GREEN}[9]${RESET}  Lab: Analisis Koneksi Lokal"
-        echo -e "  ${RED}[0]${RESET}  Kembali"
+        echo -e "  ${RED}[0]${RESET}  $CT_BACK"
         echo ""
-        echo -ne "  ${CYAN}Pilih: ${RESET}"
+        echo -ne "  ${CYAN}$CT_MPROMPT${RESET}"
         read -r choice
         case $choice in
             1) belajar_osi ;;
@@ -41,7 +62,7 @@ menu_jaringan() {
             8) simulasi_jaringan ;;
             9) lab_koneksi_lokal ;;
             0) return ;;
-            *) echo -e "${RED}Tidak valid${RESET}"; sleep 1 ;;
+            *) echo -e "${RED}$CT_INVALID${RESET}"; sleep 1 ;;
         esac
     done
 }
@@ -176,7 +197,7 @@ belajar_ip() {
         echo "  CIDR     : /$cidr"
         echo "  Jumlah Host: $hosts"
     else
-        echo "  Format tidak valid, gunakan format: X.X.X.X/XX"
+        echo "  $CT_INVALID - Format: X.X.X.X/XX"
     fi
     pause_modul
 }

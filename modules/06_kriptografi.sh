@@ -7,6 +7,14 @@ CYAN='\033[0;36m'
 WHITE='\033[1;37m'
 RESET='\033[0m'
 
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
 header() {
     clear
@@ -192,7 +200,7 @@ while true; do
     echo -e "${GREEN}  [2] Praktik Hashing (MD5, SHA)${RESET}"
     echo -e "${GREEN}  [3] Enkripsi dengan OpenSSL${RESET}"
     echo -e "${GREEN}  [4] Caesar Cipher (Kriptografi Klasik)${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  Pilih topik: ${RESET}"
     read -r pilihan
@@ -202,6 +210,6 @@ while true; do
         3) praktik_openssl ;;
         4) caesar_cipher ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

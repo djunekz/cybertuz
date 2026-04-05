@@ -1,3 +1,4 @@
+#!/bin/bash
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -6,16 +7,22 @@ WHITE='\033[1;37m'
 DIM='\033[2m'
 RESET='\033[0m'
 
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 pause_modul() {
     echo ""
-    echo -e "${DIM}Tekan ENTER untuk melanjutkan...${RESET}"
+    echo -ne "${DIM}  $CT_ENTER${RESET}"
     read -r
 }
 
 menu_dasar() {
     while true; do
         clear
-        echo -e "${RED}=== MODUL 1: DASAR-DASAR CYBER SECURITY ===${RESET}"
+        echo -e "${RED}=== $CT_M1 ===${RESET}"
         echo ""
         echo -e "  ${GREEN}[1]${RESET}  Apa itu Cyber Security?"
         echo -e "  ${GREEN}[2]${RESET}  CIA Triad (Confidentiality, Integrity, Availability)"
@@ -26,9 +33,9 @@ menu_dasar() {
         echo -e "  ${GREEN}[7]${RESET}  Hukum dan Etika dalam Cyber Security"
         echo -e "  ${GREEN}[8]${RESET}  Karir di Bidang Cyber Security"
         echo -e "  ${GREEN}[9]${RESET}  Quiz Dasar Cyber Security"
-        echo -e "  ${RED}[0]${RESET}  Kembali ke Menu Utama"
+        echo -e "  ${RED}[0]${RESET}  $CT_BACK"
         echo ""
-        echo -ne "  ${CYAN}Pilih: ${RESET}"
+        echo -ne "  ${CYAN}$CT_MPROMPT${RESET}"
         read -r choice
         case $choice in
             1) belajar_pengertian ;;
@@ -41,7 +48,7 @@ menu_dasar() {
             8) belajar_karir ;;
             9) quiz_dasar ;;
             0) return ;;
-            *) echo -e "${RED}Tidak valid${RESET}"; sleep 1 ;;
+            *) echo -e "${RED}$CT_INVALID${RESET}"; sleep 1 ;;
         esac
     done
 }
@@ -471,11 +478,11 @@ belajar_karir() {
     echo "  Skills: Web hacking, mobile hacking, API testing"
     echo "  Platform: HackerOne, Bugcrowd, Synack"
     echo ""
-    echo -e "${WHITE}SERTIFIKASI POPULER (Berdasarkan Level):${RESET}"
+    echo -e "${WHITE}SERTIFIKASI POPULER (Berdasarkan $CT_LEVEL):${RESET}"
     echo ""
-    echo "  Pemula  : CompTIA A+, Network+, Security+"
-    echo "  Menengah: CEH, CASP+, eJPT, PNPT"
-    echo "  Lanjutan: OSCP, GPEN, GXPN, CISSP"
+    echo "  $CT_LVL_NB  : CompTIA A+, Network+, Security+"
+    echo "  $CT_LVL_INT : CEH, CASP+, eJPT, PNPT"
+    echo "  $CT_LVL_ADV : OSCP, GPEN, GXPN, CISSP"
     echo "  Spesialis: GREM (malware), GCFE (forensic), GWAPT (web)"
     echo ""
     echo -e "${WHITE}ROADMAP BELAJAR CYBER SECURITY:${RESET}"
@@ -495,100 +502,100 @@ belajar_karir() {
 
 quiz_dasar() {
     clear
-    echo -e "${YELLOW}=== QUIZ: DASAR CYBER SECURITY ===${RESET}"
+    echo -e "${YELLOW}=== QUIZ: $CT_M1 ===${RESET}"
     echo ""
     local score=0
     local total=5
 
-    echo -e "${WHITE}Pertanyaan 1:${RESET}"
+    echo -e "${WHITE}$CT_Q 1:${RESET}"
     echo "Apa singkatan dari CIA dalam CIA Triad?"
     echo "a) Computer, Internet, Access"
     echo "b) Confidentiality, Integrity, Availability"
     echo "c) Cybersecurity, Intelligence, Analysis"
     echo "d) Control, Identify, Authenticate"
-    echo -ne "Jawaban: "
+    echo -ne "$CT_ANS: "
     read -r ans
     if [[ "$ans" == "b" || "$ans" == "B" ]]; then
-        echo -e "${GREEN}Benar!${RESET}"
+        echo -e "${GREEN}[$CT_CORRECT]${RESET}"
         ((score++))
     else
-        echo -e "${RED}Salah! Jawaban: b) Confidentiality, Integrity, Availability${RESET}"
+        echo -e "${RED}[$CT_WRONG] $CT_ANS: b) Confidentiality, Integrity, Availability${RESET}"
     fi
     echo ""
 
-    echo -e "${WHITE}Pertanyaan 2:${RESET}"
+    echo -e "${WHITE}$CT_Q 2:${RESET}"
     echo "Serangan yang membanjiri server dengan request sehingga tidak bisa melayani"
     echo "user normal disebut serangan:"
     echo "a) SQL Injection"
     echo "b) Phishing"
     echo "c) DoS/DDoS"
     echo "d) Man-in-the-Middle"
-    echo -ne "Jawaban: "
+    echo -ne "$CT_ANS: "
     read -r ans
     if [[ "$ans" == "c" || "$ans" == "C" ]]; then
-        echo -e "${GREEN}Benar!${RESET}"
+        echo -e "${GREEN}[$CT_CORRECT]${RESET}"
         ((score++))
     else
-        echo -e "${RED}Salah! Jawaban: c) DoS/DDoS${RESET}"
+        echo -e "${RED}[$CT_WRONG] $CT_ANS: c) DoS/DDoS${RESET}"
     fi
     echo ""
 
-    echo -e "${WHITE}Pertanyaan 3:${RESET}"
+    echo -e "${WHITE}$CT_Q 3:${RESET}"
     echo "Ethical hacker yang bekerja dengan izin untuk meningkatkan keamanan disebut:"
     echo "a) Black Hat Hacker"
     echo "b) Grey Hat Hacker"
     echo "c) Script Kiddie"
     echo "d) White Hat Hacker"
-    echo -ne "Jawaban: "
+    echo -ne "$CT_ANS: "
     read -r ans
     if [[ "$ans" == "d" || "$ans" == "D" ]]; then
-        echo -e "${GREEN}Benar!${RESET}"
+        echo -e "${GREEN}[$CT_CORRECT]${RESET}"
         ((score++))
     else
-        echo -e "${RED}Salah! Jawaban: d) White Hat Hacker${RESET}"
+        echo -e "${RED}[$CT_WRONG] $CT_ANS: d) White Hat Hacker${RESET}"
     fi
     echo ""
 
-    echo -e "${WHITE}Pertanyaan 4:${RESET}"
+    echo -e "${WHITE}$CT_Q 4:${RESET}"
     echo "Kerentanan yang belum diketahui oleh vendor disebut:"
     echo "a) Old-day vulnerability"
     echo "b) Zero-day vulnerability"
     echo "c) N-day vulnerability"
     echo "d) First-day vulnerability"
-    echo -ne "Jawaban: "
+    echo -ne "$CT_ANS: "
     read -r ans
     if [[ "$ans" == "b" || "$ans" == "B" ]]; then
-        echo -e "${GREEN}Benar!${RESET}"
+        echo -e "${GREEN}[$CT_CORRECT]${RESET}"
         ((score++))
     else
-        echo -e "${RED}Salah! Jawaban: b) Zero-day vulnerability${RESET}"
+        echo -e "${RED}[$CT_WRONG] $CT_ANS: b) Zero-day vulnerability${RESET}"
     fi
     echo ""
 
-    echo -e "${WHITE}Pertanyaan 5:${RESET}"
+    echo -e "${WHITE}$CT_Q 5:${RESET}"
     echo "Dalam penetration testing, informasi apa yang diberikan pada Black Box testing?"
     echo "a) Semua informasi tentang target"
     echo "b) Sebagian informasi tentang target"
     echo "c) Tidak ada informasi tentang target"
     echo "d) Hanya source code aplikasi"
-    echo -ne "Jawaban: "
+    echo -ne "$CT_ANS: "
     read -r ans
     if [[ "$ans" == "c" || "$ans" == "C" ]]; then
-        echo -e "${GREEN}Benar!${RESET}"
+        echo -e "${GREEN}[$CT_CORRECT]${RESET}"
         ((score++))
     else
-        echo -e "${RED}Salah! Jawaban: c) Tidak ada informasi tentang target${RESET}"
+        echo -e "${RED}[$CT_WRONG] $CT_ANS: c) Tidak ada informasi tentang target${RESET}"
     fi
     echo ""
 
-    echo -e "${YELLOW}=== HASIL QUIZ ===${RESET}"
-    echo -e "Score: ${WHITE}$score / $total${RESET}"
+    echo -e "${YELLOW}=== $CT_RESULT ===${RESET}"
+    echo -e "$CT_SCORE: ${WHITE}$score / $total${RESET}"
     if [ $score -eq 5 ]; then
-        echo -e "${GREEN}Sempurna! Kamu sudah memahami dasar cyber security dengan baik!${RESET}"
+        echo -e "${GREEN}[$CT_PASSED] Sempurna!${RESET}"
     elif [ $score -ge 3 ]; then
-        echo -e "${YELLOW}Bagus! Terus belajar untuk memahami lebih dalam.${RESET}"
+        echo -e "${YELLOW}[$CT_ENOUGH]${RESET}"
     else
-        echo -e "${RED}Perlu belajar lebih banyak. Ulangi materi dasar!${RESET}"
+        echo -e "${RED}[$CT_NOT_PASSED]${RESET}"
     fi
     pause_modul
 }

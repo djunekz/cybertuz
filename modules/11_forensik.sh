@@ -1,5 +1,13 @@
 #!/bin/bash
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WHITE='\033[1;37m'; RESET='\033[0m'
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                     FORENSIK DIGITAL"; echo "  ================================================================="; echo -e "${RESET}"; }
 
@@ -139,7 +147,7 @@ while true; do
     echo -e "${GREEN}  [1] Teori Forensik Digital${RESET}"
     echo -e "${GREEN}  [2] Analisis Log Sistem${RESET}"
     echo -e "${GREEN}  [3] Analisis File & Metadata${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  Pilih topik: ${RESET}"
     read -r pilihan
@@ -148,6 +156,6 @@ while true; do
         2) log_analysis ;;
         3) file_analysis ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

@@ -14,6 +14,14 @@ log_action() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] WEBSEC: $1" >> "$LOG_DIR/cybertuz.log"
 }
 
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 press_enter() {
     echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r
 }
@@ -274,7 +282,7 @@ while true; do
     echo -e "${GREEN}  [3] CSRF - Cross-Site Request Forgery${RESET}"
     echo -e "${GREEN}  [4] Directory & Path Traversal${RESET}"
     echo -e "${GREEN}  [5] Web Reconnaissance${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  Pilih topik: ${RESET}"
     read -r pilihan
@@ -285,6 +293,6 @@ while true; do
         4) directory_traversal ;;
         5) web_recon ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

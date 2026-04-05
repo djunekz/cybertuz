@@ -53,10 +53,10 @@ header_misi() {
     echo "  ║                    $CT_MISSION_HDR                     ║"
     echo "  ╚══════════════════════════════════════════════════════════════╝"
     echo -e "${RESET}"
-    echo -e "  ID Misi    : ${WHITE}$id${RESET}"
-    echo -e "  Judul      : ${warna}${BOLD}$judul${RESET}"
-    echo -e "  Kategori   : $kat"
-    echo -e "  Kesulitan  : ${warna}$diff${RESET}"
+    echo -e "  ID         : ${WHITE}$id${RESET}"
+    echo -e "  $CT_M1     : ${warna}${BOLD}$judul${RESET}"
+    echo -e "  Category   : $kat"
+    echo -e "  $CT_LEVEL  : ${warna}$diff${RESET}"
     echo ""
     echo -e "${CYAN}  ----------------------------------------------------------------${RESET}"
     echo ""
@@ -70,7 +70,7 @@ verif()  { echo -e "  ${MAGENTA}[$CT_VERIFY]${RESET} $1"; }
 
 
 misi_M01() {
-    header_misi "M-01" "Investigasi Domain Target" "Reconnaissance" "Mudah" "$GREEN"
+    header_misi "M-01" "Investigasi Domain Target" "Reconnaissance" "$CT_EASY" "$GREEN"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Klien baru minta kamu lakukan initial recon terhadap"
@@ -88,7 +88,7 @@ misi_M01() {
     jeda
 
     clear
-    header_misi "M-01" "Investigasi Domain Target" "Reconnaissance" "Mudah" "$GREEN"
+    header_misi "M-01" "Investigasi Domain Target" "Reconnaissance" "$CT_EASY" "$GREEN"
     echo -e "${WHITE}  $CT_EXEC:${RESET}"
     echo ""
 
@@ -163,11 +163,11 @@ misi_M01() {
 
     echo ""
     if [ "$lulus" -ge 2 ]; then
-        sukses "Misi M-01 berhasil diselesaikan!"
+        sukses "M-01 [$CT_DONE]"
         sukses "Kamu sudah bisa melakukan passive DNS recon."
         selesaikan_misi "M-01" "Investigasi Domain Target"
     else
-        gagal "Misi belum selesai. Pastikan semua objektif terpenuhi."
+        gagal "[$CT_PENDING] $CT_OBJECTIVE"
         hint "Coba install: pkg install dnsutils nmap curl"
     fi
     jeda
@@ -175,7 +175,7 @@ misi_M01() {
 
 
 misi_M02() {
-    header_misi "M-02" "Port Scan & Service Fingerprinting" "Scanning" "Mudah" "$GREEN"
+    header_misi "M-02" "Port Scan & Service Fingerprinting" "Scanning" "$CT_EASY" "$GREEN"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Setelah recon domain, kamu perlu mengetahui service apa saja"
@@ -192,7 +192,7 @@ misi_M02() {
     jeda
 
     clear
-    header_misi "M-02" "Port Scan & Service Fingerprinting" "Scanning" "Mudah" "$GREEN"
+    header_misi "M-02" "Port Scan & Service Fingerprinting" "Scanning" "$CT_EASY" "$GREEN"
 
     if ! command -v nmap &>/dev/null; then
         echo -e "  ${RED}  nmap belum terinstall!${RESET}"
@@ -246,17 +246,17 @@ misi_M02() {
 
     echo ""
     if [ "$lulus" -ge 2 ]; then
-        sukses "Misi M-02 berhasil diselesaikan!"
+        sukses "M-02 [$CT_DONE]"
         selesaikan_misi "M-02" "Port Scan & Service Fingerprinting"
     else
-        gagal "Misi belum selesai. Pastikan nmap berjalan dan kamu menganalisis hasilnya."
+        gagal "[$CT_PENDING] $CT_OBJECTIVE"
     fi
     jeda
 }
 
 
 misi_M03() {
-    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "Sedang" "$YELLOW"
+    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Tim forensik menemukan database backup dari server yang dikompromis."
@@ -271,7 +271,7 @@ misi_M03() {
     jeda
 
     clear
-    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "Sedang" "$YELLOW"
+    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  DATA TEMUAN (dari backup database):${RESET}"
     echo ""
@@ -286,7 +286,7 @@ misi_M03() {
     jeda
 
     clear
-    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "Sedang" "$YELLOW"
+    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  TUGAS 1: Identifikasi Algoritma${RESET}"
     echo ""
@@ -339,7 +339,7 @@ misi_M03() {
     jeda
 
     clear
-    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "Sedang" "$YELLOW"
+    header_misi "M-03" "Analisis Kriptografi & Hash Cracking" "Kriptografi" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  TUGAS 2: Simulasi Hash Cracking${RESET}"
     echo ""
@@ -403,7 +403,7 @@ PYEOF
         echo "  bcrypt         -> Bagus untuk password, built-in salt"
         echo "  Argon2         -> Terbaik saat ini, pemenang PHC 2015"
         echo "  scrypt         -> Memory-hard, tahan GPU attack"
-        sukses "Misi M-03 berhasil diselesaikan!"
+        sukses "M-03 [$CT_DONE]"
         selesaikan_misi "M-03" "Analisis Kriptografi & Hash Cracking"
     else
         gagal "Rekomendasi kurang tepat."
@@ -414,7 +414,7 @@ PYEOF
 
 
 misi_M04() {
-    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "Sedang" "$YELLOW"
+    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Kamu diminta melakukan security assessment terhadap web application"
@@ -430,7 +430,7 @@ misi_M04() {
     jeda
 
     clear
-    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "Sedang" "$YELLOW"
+    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  KODE APLIKASI UNTUK DIANALISIS:${RESET}"
     echo ""
@@ -481,7 +481,7 @@ PHPEOF
     jeda
 
     clear
-    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "Sedang" "$YELLOW"
+    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "$CT_MEDIUM" "$YELLOW"
 
     skor=0
 
@@ -538,7 +538,7 @@ PHPEOF
     jeda
 
     clear
-    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "Sedang" "$YELLOW"
+    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  $CT_ANALYSIS: profile.php${RESET}"
     echo ""
@@ -576,7 +576,7 @@ PHPEOF
     jeda
 
     clear
-    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "Sedang" "$YELLOW"
+    header_misi "M-04" "Web Vulnerability Hunting" "Web Security" "$CT_MEDIUM" "$YELLOW"
 
     echo -e "${WHITE}  TUGAS AKHIR: LAPORAN SINGKAT${RESET}"
     echo ""
@@ -599,11 +599,11 @@ PHPEOF
     echo -e "${WHITE}  $CT_RESULT:${RESET}"
     echo ""
     persen=$(( skor * 100 / 7 ))
-    echo -e "  Vulnerability teridentifikasi: ${WHITE}$skor / 7 poin${RESET} ($persen%)"
+    echo -e "  $CT_FINDING: ${WHITE}$skor / 7${RESET} ($persen%)"
     echo ""
 
     if [ "$skor" -ge 5 ]; then
-        sukses "Misi M-04 berhasil diselesaikan dengan baik!"
+        sukses "M-04 [$CT_DONE]"
         selesaikan_misi "M-04" "Web Vulnerability Hunting"
     elif [ "$skor" -ge 3 ]; then
         echo -e "  ${YELLOW}  Cukup. Pelajari lagi materi Web Security untuk hasil lebih baik.${RESET}"
@@ -615,7 +615,7 @@ PHPEOF
 
 
 misi_M05() {
-    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "Sulit" "$RED"
+    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Kamu mendapat akses awal ke server Linux sebagai user 'webuser'."
@@ -632,7 +632,7 @@ misi_M05() {
     jeda
 
     clear
-    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "Sulit" "$RED"
+    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  EKSEKUSI - ENUMERASI SISTEM:${RESET}"
     echo ""
@@ -671,7 +671,7 @@ misi_M05() {
     jeda
 
     clear
-    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "Sulit" "$RED"
+    header_misi "M-05" "Linux Post-Exploitation Walkthrough" "Linux Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  $CT_ANALYSIS:${RESET}"
     echo ""
@@ -752,11 +752,11 @@ misi_M05() {
 
     echo ""
     persen=$(( skor * 100 / 6 ))
-    echo -e "  Skor: ${WHITE}$skor / 6${RESET} ($persen%)"
+    echo -e "  $CT_SCORE: ${WHITE}$skor / 6${RESET} ($persen%)"
     echo ""
 
     if [ "$skor" -ge 4 ]; then
-        sukses "Misi M-05 berhasil diselesaikan!"
+        sukses "M-05 [$CT_DONE]"
         selesaikan_misi "M-05" "Linux Post-Exploitation Walkthrough"
     else
         gagal "Selesaikan misi sebelumnya dan pelajari modul Linux Security."
@@ -766,7 +766,7 @@ misi_M05() {
 
 
 misi_M06() {
-    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "Sulit" "$RED"
+    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  $CT_BACKGROUND:${RESET}"
     echo "  Kamu adalah Security Analyst. SOC menerima alert:"
@@ -782,7 +782,7 @@ misi_M06() {
     jeda
 
     clear
-    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "Sulit" "$RED"
+    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  LOG YANG DITEMUKAN:${RESET}"
     echo ""
@@ -806,7 +806,7 @@ LOGEOF
     jeda
 
     clear
-    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "Sulit" "$RED"
+    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "$CT_HARD" "$RED"
 
     skor=0
 
@@ -879,7 +879,7 @@ LOGEOF
     jeda
 
     clear
-    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "Sulit" "$RED"
+    header_misi "M-06" "Incident Response Simulation" "Defensive Security" "$CT_HARD" "$RED"
 
     echo -e "${WHITE}  LANGKAH RESPONSE:${RESET}"
     echo ""
@@ -919,7 +919,7 @@ LOGEOF
 
     echo ""
     persen=$(( skor * 100 / 7 ))
-    echo -e "  Skor: ${WHITE}$skor / 7${RESET} ($persen%)"
+    echo -e "  $CT_SCORE: ${WHITE}$skor / 7${RESET} ($persen%)"
     echo ""
 
     if [ "$skor" -ge 5 ]; then

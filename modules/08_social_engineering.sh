@@ -1,5 +1,13 @@
 #!/bin/bash
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WHITE='\033[1;37m'; RESET='\033[0m'
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                SOCIAL ENGINEERING AWARENESS"; echo "  ================================================================="; echo -e "${RESET}"; }
 
@@ -95,9 +103,9 @@ phishing_awareness() {
         echo -ne "${WHITE}  Phishing atau Aman? (p/a): ${RESET}"
         read -r answer
         if [[ "$answer" == "p" && "${verdict[$i]}" == "PHISHING" ]] || [[ "$answer" == "a" && "${verdict[$i]}" == "AMAN" ]]; then
-            echo -e "${GREEN}  BENAR! ${verdict[$i]}${RESET}"
+            echo -e "${GREEN}  [$CT_CORRECT] ${verdict[$i]}${RESET}"
         else
-            echo -e "${RED}  SALAH! Jawaban: ${verdict[$i]}${RESET}"
+            echo -e "${RED}  [$CT_WRONG] $CT_ANS: ${verdict[$i]}${RESET}"
             if [[ "${verdict[$i]}" == "PHISHING" ]]; then
                 echo -e "${WHITE}  Domain ini mencurigakan karena tidak resmi.${RESET}"
             fi
@@ -148,7 +156,7 @@ while true; do
     echo -e "${GREEN}  [1] Teori Social Engineering${RESET}"
     echo -e "${GREEN}  [2] Phishing Awareness & Simulasi${RESET}"
     echo -e "${GREEN}  [3] Pretexting & Skenario Penipuan${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  Pilih topik: ${RESET}"
     read -r pilihan
@@ -157,6 +165,6 @@ while true; do
         2) phishing_awareness ;;
         3) pretexting ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

@@ -3,7 +3,11 @@ RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WH
 CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LOG_DIR="$CYBERTUZ_DIR/logs"
 REPORT_DIR="$CYBERTUZ_DIR/reports"
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+press_enter() { echo ""; echo -ne "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                  LAPORAN & PROGRESS BELAJAR"; echo "  ================================================================="; echo -e "${RESET}"; }
 
 show_progress() {
@@ -15,7 +19,7 @@ show_progress() {
     if [[ -f "$LOG_DIR/ctf_score.txt" ]]; then
         ctf_score=$(cat "$LOG_DIR/ctf_score.txt")
     fi
-    echo -e "${WHITE}  Skor CTF: ${YELLOW}$ctf_score poin${RESET}"
+    echo -e "${WHITE}  $CT_SCORE CTF: ${YELLOW}$ctf_score${RESET}"
     echo ""
     if [[ -f "$LOG_DIR/cybertuz.log" ]]; then
         total_actions=$(wc -l < "$LOG_DIR/cybertuz.log")
@@ -193,15 +197,15 @@ while true; do
     echo -e "${GREEN}  [1] Lihat Progress Belajar${RESET}"
     echo -e "${GREEN}  [2] Generate Template Laporan Pentest${RESET}"
     echo -e "${GREEN}  [3] Sumber Belajar & Roadmap${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih: ${RESET}"
+    echo -ne "${WHITE}  $CT_MPROMPT${RESET}"
     read -r pilihan
     case $pilihan in
         1) show_progress ;;
         2) generate_report ;;
         3) resources ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

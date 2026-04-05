@@ -1,5 +1,13 @@
 #!/bin/bash
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WHITE='\033[1;37m'; RESET='\033[0m'
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
 press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                    WIRELESS SECURITY"; echo "  ================================================================="; echo -e "${RESET}"; }
 
@@ -101,7 +109,7 @@ while true; do
     echo ""
     echo -e "${GREEN}  [1] Teori Keamanan Wi-Fi${RESET}"
     echo -e "${GREEN}  [2] Wi-Fi Scanner & Analisis${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
     echo -ne "${WHITE}  Pilih topik: ${RESET}"
     read -r pilihan
@@ -109,6 +117,6 @@ while true; do
         1) teori_wifi ;;
         2) wifi_scanner ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done

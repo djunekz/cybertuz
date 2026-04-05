@@ -1,6 +1,13 @@
 #!/bin/bash
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WHITE='\033[1;37m'; RESET='\033[0m'
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+
+CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [ -z "$CYBERTUZ_LANG" ]; then
+    source "$CYBERTUZ_DIR/lang.sh"
+    ct_load_lang || _ct_set_lang "en"
+fi
+
+press_enter() { echo ""; echo -ne "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                TOOLS & CHEATSHEET LENGKAP"; echo "  ================================================================="; echo -e "${RESET}"; }
 
 install_tools() {
@@ -204,9 +211,9 @@ while true; do
     echo -e "${GREEN}  [3] Curl Cheatsheet untuk Web Testing${RESET}"
     echo -e "${GREEN}  [4] Python Security Scripts${RESET}"
     echo -e "${GREEN}  [5] Linux Privilege Escalation Cheatsheet${RESET}"
-    echo -e "${YELLOW}  [0] Kembali ke Menu Utama${RESET}"
+    echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih: ${RESET}"
+    echo -ne "${WHITE}  $CT_MPROMPT${RESET}"
     read -r pilihan
     case $pilihan in
         1) install_tools ;;
@@ -215,6 +222,6 @@ while true; do
         4) python_security_scripts ;;
         5) linux_privesc_cheatsheet ;;
         0) exit 0 ;;
-        *) echo -e "${RED}  Pilihan tidak valid!${RESET}"; sleep 1 ;;
+        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done
