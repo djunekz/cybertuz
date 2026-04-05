@@ -44,6 +44,10 @@ CyberTuz is a free, open-source, terminal-based cyber security learning platform
 ---
 
 ## Installation
+```bash
+pip install cybertuz
+```
+or
 
 ```bash
 # Update Termux packages
