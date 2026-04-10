@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cybertuz"
+version = "1.0.1"
+description = "Comprehensive Cyber Security Learning Platform for Termux & Linux"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "djunekz", email = "djunekz@github.com" }
+]
+keywords = [
+    "cybersecurity", "hacking", "ethical-hacking", "penetration-testing",
+    "termux", "ctf", "security", "learning", "education"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+    "Topic :: Security",
+    "Topic :: System :: Shells",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Homepage    = "https://github.com/djunekz/cybertuz"
+Repository  = "https://github.com/djunekz/cybertuz"
+"Bug Tracker" = "https://github.com/djunekz/cybertuz/issues"
+
+[project.scripts]
+cybertuz = "cybertuz.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cybertuz*"]
+
+[tool.setuptools.package-data]
+cybertuz = [
+    "data/*.sh",
+    "data/modules/*.sh",
+]

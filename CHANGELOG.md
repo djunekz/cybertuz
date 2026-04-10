@@ -14,7 +14,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and 
 
 ---
 
-## [2.0.0] - 2026
+## [1.0.1] - 2026
 
 ### Added
 - **Multi-language system** — Full support for 13 languages: English, Indonesian, Hindi, Malay, Russian, Chinese Simplified, Japanese, Thai, Vietnamese, Arabic, Spanish, Italian, Korean
