@@ -23,7 +23,7 @@ if [ -z "$CYBERTUZ_LANG" ]; then
 fi
 
 press_enter() {
-    echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r
+    echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r
 }
 
 header() {
@@ -40,22 +40,22 @@ sqli_tutorial() {
     echo -e "${CYAN}  SQL INJECTION - TEORI & PRAKTIK${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  SQL Injection adalah serangan dengan menyisipkan kode SQL berbahaya${RESET}"
-    echo -e "${WHITE}  ke dalam input yang dikirim ke database.${RESET}"
+    echo -e "${WHITE}  $CT_C_SQLI_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  CARA KERJA:${RESET}"
+    echo -e "${GREEN}  $CT_C_HOW_IT_WORKS${RESET}"
     echo -e "${WHITE}  Aplikasi membangun query SQL dari input user tanpa sanitasi.${RESET}"
     echo ""
-    echo -e "${YELLOW}  Query normal:${RESET}"
+    echo -e "${YELLOW}  $CT_C_NORMAL_QUERY${RESET}"
     echo -e "${WHITE}  SELECT * FROM users WHERE username='john' AND password='pass'${RESET}"
     echo ""
-    echo -e "${YELLOW}  Dengan SQLi payload:${RESET}"
+    echo -e "${YELLOW}  $CT_C_WITH_PAYLOAD${RESET}"
     echo -e "${WHITE}  Username: admin'--${RESET}"
     echo -e "${WHITE}  Query menjadi:${RESET}"
     echo -e "${RED}  SELECT * FROM users WHERE username='admin'--' AND password='...'${RESET}"
     echo -e "${WHITE}  (-- adalah komentar SQL, password check diabaikan!)${RESET}"
     echo ""
-    echo -e "${GREEN}  JENIS SQL INJECTION:${RESET}"
+    echo -e "${GREEN}  $CT_C_SQLI_TYPES${RESET}"
     echo ""
     echo -e "${YELLOW}  1. In-Band SQLi (Classic)${RESET}"
     echo -e "${WHITE}     Error-based: Error database bocor info struktur tabel${RESET}"
@@ -68,47 +68,47 @@ sqli_tutorial() {
     echo -e "${YELLOW}  3. Out-of-Band SQLi${RESET}"
     echo -e "${WHITE}     Data dikirim lewat channel berbeda (DNS, HTTP request)${RESET}"
     echo ""
-    echo -e "${GREEN}  PAYLOAD UMUM UNTUK TESTING:${RESET}"
+    echo -e "${GREEN}  $CT_C_PAYLOADS${RESET}"
     echo -e "${WHITE}  '                    (single quote - test error)${RESET}"
     echo -e "${WHITE}  ' OR '1'='1          (always true)${RESET}"
     echo -e "${WHITE}  ' OR '1'='1'--       (comment out rest)${RESET}"
     echo -e "${WHITE}  ' UNION SELECT NULL--  (union test)${RESET}"
     echo -e "${WHITE}  1' AND SLEEP(5)--    (time-based blind)${RESET}"
     echo ""
-    echo -e "${GREEN}  PENCEGAHAN SQL INJECTION:${RESET}"
+    echo -e "${GREEN}  $CT_C_PREVENTION${RESET}"
     echo -e "${WHITE}  - Prepared Statements / Parameterized Queries${RESET}"
     echo -e "${WHITE}  - Stored Procedures${RESET}"
     echo -e "${WHITE}  - Input validation dan sanitasi${RESET}"
     echo -e "${WHITE}  - Least privilege (user DB hanya punya hak minimal)${RESET}"
     echo -e "${WHITE}  - WAF (Web Application Firewall)${RESET}"
     echo ""
-    echo -e "${GREEN}  SIMULASI SQLI:${RESET}"
+    echo -e "${GREEN}  $CT_C_SIMULATION${RESET}"
     echo -e "${WHITE}  Coba masukkan payload di bawah dan lihat apa yang terjadi:${RESET}"
     echo ""
     simulate_login() {
         local username="$1"
         local password="$2"
         if [[ "$username" == "admin'--" ]] || [[ "$username" == *"' OR '1'='1"* ]] || [[ "$username" == *"--"* ]]; then
-            echo -e "${RED}  [EXPLOIT] SQL INJECTION BERHASIL!${RESET}"
-            echo -e "${RED}  Login berhasil tanpa password yang benar!${RESET}"
-            echo -e "${WHITE}  Kamu sekarang login sebagai: admin${RESET}"
+            echo -e "${RED}  $CT_C_LOGIN_EXPLOIT${RESET}"
+            echo -e "${RED}  $CT_C_LOGIN_BYPASS${RESET}"
+            echo -e "${WHITE}  $CT_C_LOGIN_AS${RESET}"
             return 0
         elif [[ "$username" == "admin" && "$password" == "password123" ]]; then
-            echo -e "${GREEN}  Login berhasil dengan kredensial yang benar!${RESET}"
+            echo -e "${GREEN}  $CT_C_LOGIN_OK${RESET}"
             return 0
         else
-            echo -e "${WHITE}  Login gagal. Username atau password salah.${RESET}"
+            echo -e "${WHITE}  $CT_C_LOGIN_FAIL${RESET}"
             return 1
         fi
     }
-    echo -ne "${WHITE}  Username: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_USERNAME${RESET}"
     read -r sim_user
-    echo -ne "${WHITE}  Password: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_PASSWORD${RESET}"
     read -r sim_pass
     echo ""
     simulate_login "$sim_user" "$sim_pass"
     echo ""
-    echo -e "${YELLOW}  Hint: Coba username: admin'-- dengan password apapun${RESET}"
+    echo -e "${YELLOW}  $CT_C_SQLI_HINT${RESET}"
     log_action "SQLi simulation tried"
     press_enter
 }
@@ -118,9 +118,9 @@ xss_tutorial() {
     echo -e "${CYAN}  CROSS-SITE SCRIPTING (XSS)${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  XSS adalah serangan injeksi script ke halaman web yang dilihat user lain.${RESET}"
+    echo -e "${WHITE}  $CT_C_XSS_DEF${RESET}"
     echo ""
-    echo -e "${GREEN}  JENIS XSS:${RESET}"
+    echo -e "${GREEN}  $CT_C_XSS_TYPES${RESET}"
     echo ""
     echo -e "${YELLOW}  1. Reflected XSS${RESET}"
     echo -e "${WHITE}     Script di-reflect dari server kembali ke browser user.${RESET}"
@@ -152,16 +152,16 @@ xss_tutorial() {
     echo -e "${WHITE}  - Input validation di server${RESET}"
     echo ""
     echo -e "${GREEN}  SIMULASI XSS FILTER TEST:${RESET}"
-    echo -ne "${WHITE}  Masukkan input (coba masukkan tag HTML/script): ${RESET}"
+    echo -ne "${WHITE}  $CT_C_XSS_INPUT${RESET}"
     read -r xss_input
     echo ""
     if echo "$xss_input" | grep -qiE "<script|onerror|onload|javascript:"; then
-        echo -e "${RED}  [RENTAN] Input mengandung payload XSS yang tidak disanitasi!${RESET}"
+        echo -e "${RED}  $CT_C_XSS_VULN${RESET}"
         echo -e "${WHITE}  Input kamu: $xss_input${RESET}"
-        echo -e "${YELLOW}  Pada aplikasi rentan, script ini akan dieksekusi di browser!${RESET}"
+        echo -e "${YELLOW}  $CT_C_XSS_VULN2${RESET}"
     else
-        echo -e "${GREEN}  Input terlihat aman dari XSS dasar.${RESET}"
-        echo -e "${WHITE}  Tapi tetap perlu encode output untuk keamanan penuh.${RESET}"
+        echo -e "${GREEN}  $CT_C_XSS_SAFE${RESET}"
+        echo -e "${WHITE}  $CT_C_XSS_NOTE${RESET}"
     fi
     press_enter
 }
@@ -171,8 +171,8 @@ csrf_tutorial() {
     echo -e "${CYAN}  CROSS-SITE REQUEST FORGERY (CSRF)${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  CSRF adalah serangan yang memaksa user yang sudah login${RESET}"
-    echo -e "${WHITE}  melakukan aksi yang tidak diinginkan di website.${RESET}"
+    echo -e "${WHITE}  $CT_C_CSRF_DEF${RESET}"
+    
     echo ""
     echo -e "${GREEN}  CARA KERJA CSRF:${RESET}"
     echo ""
@@ -203,8 +203,8 @@ directory_traversal() {
     echo -e "${CYAN}  DIRECTORY TRAVERSAL & PATH TRAVERSAL${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Path traversal memungkinkan penyerang mengakses file${RESET}"
-    echo -e "${WHITE}  di luar direktori yang seharusnya bisa diakses.${RESET}"
+    echo -e "${WHITE}  $CT_C_PATH_DEF${RESET}"
+    
     echo ""
     echo -e "${GREEN}  CONTOH RENTAN:${RESET}"
     echo -e "${WHITE}  URL normal: http://target.com/files?name=report.pdf${RESET}"
@@ -236,7 +236,7 @@ web_recon() {
     echo -e "${CYAN}  WEB RECONNAISSANCE - MEMETAKAN APLIKASI WEB${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Sebelum testing web app, perlu memetakan struktur dan teknologinya.${RESET}"
+    echo -e "${WHITE}  $CT_C_WEBRECON_DEF${RESET}"
     echo ""
     echo -e "${GREEN}  LANGKAH WEB RECON:${RESET}"
     echo ""
@@ -255,16 +255,16 @@ web_recon() {
     echo -e "${WHITE}  curl http://target.com/sitemap.xml${RESET}"
     echo ""
     echo -e "${GREEN}  PRAKTIK - CEK ROBOTS.TXT:${RESET}"
-    echo -ne "${WHITE}  Masukkan domain target: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_ENTER_DOMAIN${RESET}"
     read -r web_target
     if [[ -n "$web_target" ]]; then
         echo ""
-        echo -e "${CYAN}  Mengecek robots.txt ...${RESET}"
+        echo -e "${CYAN}  $CT_C_CHECKING_ROBOTS${RESET}"
         curl -s --connect-timeout 5 "http://$web_target/robots.txt" 2>/dev/null | head -20 || \
         curl -s --connect-timeout 5 "https://$web_target/robots.txt" 2>/dev/null | head -20 || \
-        echo -e "${RED}  Tidak bisa mengakses $web_target${RESET}"
+        echo -e "${RED}  $CT_C_CANNOT_ACCESS $web_target${RESET}"
         echo ""
-        echo -e "${CYAN}  Mengecek headers HTTP ...${RESET}"
+        echo -e "${CYAN}  $CT_C_CHECKING_HEADERS${RESET}"
         curl -I --connect-timeout 5 "https://$web_target" 2>/dev/null | head -15
         log_action "Web recon: $web_target"
     fi
@@ -284,7 +284,7 @@ while true; do
     echo -e "${GREEN}  [5] $CT_M5_5${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih topik: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
     read -r pilihan
     case $pilihan in
         1) sqli_tutorial ;;

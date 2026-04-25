@@ -8,7 +8,7 @@ if [ -z "$CYBERTUZ_LANG" ]; then
     ct_load_lang || _ct_set_lang "en"
 fi
 
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+press_enter() { echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                    WIRELESS SECURITY"; echo "  ================================================================="; echo -e "${RESET}"; }
 
 teori_wifi() {
@@ -16,28 +16,28 @@ teori_wifi() {
     echo -e "${CYAN}  KEAMANAN JARINGAN WIRELESS${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Wi-Fi menggunakan gelombang radio yang bisa disadap oleh siapapun${RESET}"
-    echo -e "${WHITE}  dalam jangkauan sinyal. Keamanan sangat penting!${RESET}"
+    echo -e "${WHITE}  $CT_C_WIFI_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  PROTOKOL KEAMANAN WI-FI:${RESET}"
+    echo -e "${GREEN}  $CT_C_WIFI_PROTOCOLS${RESET}"
     echo ""
-    echo -e "${RED}  WEP (Wired Equivalent Privacy) - JANGAN GUNAKAN${RESET}"
-    echo -e "${WHITE}  Protokol lama yang sudah retak. Bisa di-crack dalam menit.${RESET}"
-    echo -e "${WHITE}  RC4 cipher dengan implementasi yang lemah.${RESET}"
+    echo -e "${RED}  $CT_C_WEP${RESET}"
+    echo -e "${WHITE}  $CT_C_WEP_DESC${RESET}"
+    
     echo ""
-    echo -e "${YELLOW}  WPA (Wi-Fi Protected Access)${RESET}"
-    echo -e "${WHITE}  Lebih baik dari WEP tapi masih rentan terhadap serangan.${RESET}"
-    echo -e "${WHITE}  Menggunakan TKIP yang sudah terkompromi.${RESET}"
+    echo -e "${YELLOW}  $CT_C_WPA${RESET}"
+    echo -e "${WHITE}  $CT_C_WPA_DESC${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  WPA2 - Standar Saat Ini${RESET}"
-    echo -e "${WHITE}  Menggunakan AES-CCMP yang kuat.${RESET}"
-    echo -e "${WHITE}  Rentan terhadap: brute force handshake, KRACK${RESET}"
+    echo -e "${GREEN}  $CT_C_WPA2${RESET}"
+    echo -e "${WHITE}  $CT_C_WPA2_DESC${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  WPA3 - Paling Aman${RESET}"
-    echo -e "${WHITE}  SAE (Simultaneous Authentication of Equals) menggantikan PSK.${RESET}"
-    echo -e "${WHITE}  Proteksi terhadap offline dictionary attack.${RESET}"
+    echo -e "${GREEN}  $CT_C_WPA3${RESET}"
+    echo -e "${WHITE}  $CT_C_WPA3_DESC${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  SERANGAN TERHADAP WI-FI:${RESET}"
+    echo -e "${GREEN}  $CT_C_WIFI_ATTACKS${RESET}"
     echo ""
     echo -e "${YELLOW}  1. WPA2 Handshake Capture${RESET}"
     echo -e "${WHITE}     Capture 4-way handshake lalu brute force offline.${RESET}"
@@ -50,7 +50,7 @@ teori_wifi() {
     echo -e "${YELLOW}  3. Deauthentication Attack${RESET}"
     echo -e "${WHITE}     Paksa client disconnect untuk capture handshake saat reconnect.${RESET}"
     echo ""
-    echo -e "${GREEN}  TIPS KEAMANAN WI-FI:${RESET}"
+    echo -e "${GREEN}  $CT_C_WIFI_TIPS${RESET}"
     echo -e "${WHITE}  - Gunakan WPA3 atau WPA2 dengan password kuat${RESET}"
     echo -e "${WHITE}  - Sembunyikan SSID (tidak 100% efektif)${RESET}"
     echo -e "${WHITE}  - MAC address filtering (bisa di-bypass)${RESET}"
@@ -67,7 +67,7 @@ wifi_scanner() {
     echo ""
     echo -e "${WHITE}  Kita bisa menganalisis jaringan Wi-Fi di sekitar kita.${RESET}"
     echo ""
-    echo -e "${GREEN}  TOOLS UNTUK WIFI SCANNING:${RESET}"
+    echo -e "${GREEN}  $CT_C_WIFI_TOOLS${RESET}"
     echo ""
     echo -e "${YELLOW}  nmcli (Network Manager CLI):${RESET}"
     echo -e "${WHITE}  nmcli dev wifi list${RESET}"
@@ -79,7 +79,7 @@ wifi_scanner() {
     echo -e "${WHITE}  airmon-ng start wlan0       (aktifkan monitor mode)${RESET}"
     echo -e "${WHITE}  airodump-ng wlan0mon         (scan network)${RESET}"
     echo ""
-    echo -e "${GREEN}  MENCEK KEAMANAN ROUTER:${RESET}"
+    echo -e "${GREEN}  $CT_C_WIFI_CHECK${RESET}"
     echo ""
     echo -e "${WHITE}  Hal yang perlu dicek:${RESET}"
     echo -e "${WHITE}  1. Protokol keamanan (WPA2/WPA3)${RESET}"
@@ -89,14 +89,14 @@ wifi_scanner() {
     echo -e "${WHITE}  5. UPnP disabled jika tidak dibutuhkan${RESET}"
     echo ""
     if command -v nmcli &>/dev/null; then
-        echo -e "${CYAN}  Jaringan Wi-Fi di sekitar:${RESET}"
-        nmcli dev wifi list 2>/dev/null | head -20 || echo -e "${RED}  Tidak bisa scan Wi-Fi (mungkin butuh root)${RESET}"
+        echo -e "${CYAN}  $CT_C_WIFI_NEARBY${RESET}"
+        nmcli dev wifi list 2>/dev/null | head -20 || echo -e "${RED}  $CT_C_WIFI_CANT_SCAN${RESET}"
     elif command -v iwlist &>/dev/null; then
         echo -e "${CYAN}  Scanning Wi-Fi...${RESET}"
         iwlist scan 2>/dev/null | grep -E "SSID|Quality|Encryption" | head -30 || echo -e "${RED}  Scan gagal. Coba: iwlist wlan0 scan${RESET}"
     else
-        echo -e "${RED}  Tool Wi-Fi scanning tidak tersedia.${RESET}"
-        echo -e "${WHITE}  Install: pkg install wireless-tools atau pkg install network-manager${RESET}"
+        echo -e "${RED}  $CT_C_WIFI_NO_TOOL${RESET}"
+        echo -e "${WHITE}  $CT_C_WIFI_INSTALL${RESET}"
     fi
     press_enter
 }
@@ -111,7 +111,7 @@ while true; do
     echo -e "${GREEN}  [2] $CT_M10_2${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih topik: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
     read -r pilihan
     case $pilihan in
         1) teori_wifi ;;

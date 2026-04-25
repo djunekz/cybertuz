@@ -15,7 +15,7 @@ if [ -z "$CYBERTUZ_LANG" ]; then
     ct_load_lang || _ct_set_lang "en"
 fi
 
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+press_enter() { echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() {
     clear
     echo -e "${RED}"
@@ -30,37 +30,37 @@ teori_password() {
     echo -e "${CYAN}  KEAMANAN PASSWORD${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${GREEN}  JENIS SERANGAN PASSWORD:${RESET}"
+    echo -e "${GREEN}  $CT_C_PWD_ATTACK_TYPES${RESET}"
     echo ""
-    echo -e "${YELLOW}  1. Brute Force Attack${RESET}"
+    echo -e "${YELLOW}  $CT_C_BRUTE_FORCE${RESET}"
     echo -e "${WHITE}     Mencoba semua kombinasi karakter yang mungkin.${RESET}"
     echo -e "${WHITE}     Lambat tapi pasti berhasil jika tidak ada batasan.${RESET}"
     echo -e "${WHITE}     Contoh: aa, ab, ac... zz, aaa, aab...${RESET}"
     echo ""
-    echo -e "${YELLOW}  2. Dictionary Attack${RESET}"
+    echo -e "${YELLOW}  $CT_C_DICT_ATTACK${RESET}"
     echo -e "${WHITE}     Menggunakan daftar kata-kata umum sebagai password.${RESET}"
     echo -e "${WHITE}     Lebih cepat dari brute force.${RESET}"
     echo -e "${WHITE}     Wordlist populer: rockyou.txt (14 juta password)${RESET}"
     echo ""
-    echo -e "${YELLOW}  3. Rainbow Table Attack${RESET}"
+    echo -e "${YELLOW}  $CT_C_RAINBOW${RESET}"
     echo -e "${WHITE}     Database hash yang sudah dihitung sebelumnya.${RESET}"
     echo -e "${WHITE}     Sangat cepat tapi perlu storage besar.${RESET}"
     echo -e "${WHITE}     Pencegahan: SALT (nilai random sebelum hash)${RESET}"
     echo ""
-    echo -e "${YELLOW}  4. Credential Stuffing${RESET}"
+    echo -e "${YELLOW}  $CT_C_CRED_STUFF${RESET}"
     echo -e "${WHITE}     Menggunakan username/password dari data breach lain.${RESET}"
     echo -e "${WHITE}     Memanfaatkan kebiasaan reuse password${RESET}"
     echo ""
-    echo -e "${YELLOW}  5. Password Spraying${RESET}"
+    echo -e "${YELLOW}  $CT_C_PWD_SPRAY${RESET}"
     echo -e "${WHITE}     Mencoba 1 password umum ke banyak akun.${RESET}"
     echo -e "${WHITE}     Menghindari lockout akun${RESET}"
     echo ""
-    echo -e "${GREEN}  PASSWORD YANG KUAT:${RESET}"
-    echo -e "${WHITE}  - Minimal 12 karakter${RESET}"
-    echo -e "${WHITE}  - Kombinasi huruf besar, kecil, angka, simbol${RESET}"
-    echo -e "${WHITE}  - Tidak menggunakan kata yang ada di kamus${RESET}"
-    echo -e "${WHITE}  - Unik untuk setiap akun${RESET}"
-    echo -e "${WHITE}  - Gunakan password manager${RESET}"
+    echo -e "${GREEN}  $CT_C_STRONG_PWD${RESET}"
+    echo -e "${WHITE}  - $CT_C_STRONG_1${RESET}"
+    echo -e "${WHITE}  - $CT_C_STRONG_2${RESET}"
+    echo -e "${WHITE}  - $CT_C_STRONG_3${RESET}"
+    echo -e "${WHITE}  - $CT_C_STRONG_4${RESET}"
+    echo -e "${WHITE}  - $CT_C_STRONG_5${RESET}"
     press_enter
 }
 
@@ -69,7 +69,7 @@ password_strength() {
     echo -e "${CYAN}  ANALISIS KEKUATAN PASSWORD${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -ne "${WHITE}  Masukkan password untuk dianalisis: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_ENTER_PWD${RESET}"
     read -r -s test_pass
     echo ""
     echo ""
@@ -81,7 +81,7 @@ password_strength() {
     if [[ $len -ge 8 ]]; then
         score=$((score + 1))
     else
-        feedback+=("Terlalu pendek, minimal 8 karakter")
+        feedback+=("$CT_C_PWD_TOO_SHORT")
     fi
     
     if [[ $len -ge 12 ]]; then
@@ -95,48 +95,48 @@ password_strength() {
     if echo "$test_pass" | grep -q '[A-Z]'; then
         score=$((score + 1))
     else
-        feedback+=("Tambahkan huruf kapital")
+        feedback+=("$CT_C_ADD_UPPER")
     fi
     
     if echo "$test_pass" | grep -q '[a-z]'; then
         score=$((score + 1))
     else
-        feedback+=("Tambahkan huruf kecil")
+        feedback+=("$CT_C_ADD_LOWER")
     fi
     
     if echo "$test_pass" | grep -q '[0-9]'; then
         score=$((score + 1))
     else
-        feedback+=("Tambahkan angka")
+        feedback+=("$CT_C_ADD_NUMBERS")
     fi
     
     if echo "$test_pass" | grep -q '[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]'; then
         score=$((score + 1))
     else
-        feedback+=("Tambahkan karakter spesial (!@#\$%^&*)")
+        feedback+=("$CT_C_ADD_SPECIAL")
     fi
     
     echo -e "${CYAN}  Analisis Password:${RESET}"
-    echo -e "${WHITE}  Panjang: $len karakter${RESET}"
+    echo -e "${WHITE}  $CT_C_PWD_LEN $len $CT_C_PWD_CHARS${RESET}"
     echo ""
     
     if [[ $score -le 2 ]]; then
-        echo -e "${RED}  Kekuatan: SANGAT LEMAH (score: $score/7)${RESET}"
-        echo -e "${RED}  Perkiraan waktu crack: Detik hingga menit${RESET}"
+        echo -e "${RED}  $CT_C_PWD_VERY_WEAK${RESET}"
+        echo -e "${RED}  $CT_C_CRACK_TIME_S${RESET}"
     elif [[ $score -le 4 ]]; then
-        echo -e "${YELLOW}  Kekuatan: LEMAH (score: $score/7)${RESET}"
-        echo -e "${YELLOW}  Perkiraan waktu crack: Menit hingga jam${RESET}"
+        echo -e "${YELLOW}  $CT_C_PWD_WEAK${RESET}"
+        echo -e "${YELLOW}  $CT_C_CRACK_TIME_M${RESET}"
     elif [[ $score -le 6 ]]; then
-        echo -e "${GREEN}  Kekuatan: SEDANG (score: $score/7)${RESET}"
-        echo -e "${GREEN}  Perkiraan waktu crack: Hari hingga bulan${RESET}"
+        echo -e "${GREEN}  $CT_C_PWD_MEDIUM${RESET}"
+        echo -e "${GREEN}  $CT_C_CRACK_TIME_D${RESET}"
     else
-        echo -e "${GREEN}  Kekuatan: KUAT (score: $score/7)${RESET}"
-        echo -e "${GREEN}  Perkiraan waktu crack: Tahun hingga dekade${RESET}"
+        echo -e "${GREEN}  $CT_C_PWD_STRONG${RESET}"
+        echo -e "${GREEN}  $CT_C_CRACK_TIME_Y${RESET}"
     fi
     
     if [[ ${#feedback[@]} -gt 0 ]]; then
         echo ""
-        echo -e "${YELLOW}  Saran perbaikan:${RESET}"
+        echo -e "${YELLOW}  $CT_C_IMPROVEMENT${RESET}"
         for tip in "${feedback[@]}"; do
             echo -e "${WHITE}  - $tip${RESET}"
         done
@@ -146,7 +146,7 @@ password_strength() {
     for common in "${common_passwords[@]}"; do
         if [[ "${test_pass,,}" == "$common" ]]; then
             echo ""
-            echo -e "${RED}  PERINGATAN: Password ini ada di daftar password umum!${RESET}"
+            echo -e "${RED}  $CT_C_COMMON_PWD_WARN${RESET}"
             break
         fi
     done
@@ -159,10 +159,10 @@ hash_cracking_demo() {
     echo -e "${CYAN}  DEMO: HASH CRACKING (DICTIONARY ATTACK)${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Ini adalah simulasi bagaimana hash password bisa di-crack.${RESET}"
-    echo -e "${WHITE}  INGAT: Hanya gunakan pada hash milikmu sendiri!${RESET}"
+    echo -e "${WHITE}  $CT_C_HASH_CRACK_INTRO${RESET}"
+    echo -e "${WHITE}  $CT_C_HASH_CRACK_WARN${RESET}"
     echo ""
-    echo -e "${GREEN}  TOOLS POPULER UNTUK HASH CRACKING:${RESET}"
+    echo -e "${GREEN}  $CT_C_POPULAR_TOOLS${RESET}"
     echo ""
     echo -e "${YELLOW}  John the Ripper:${RESET}"
     echo -e "${WHITE}  john --wordlist=rockyou.txt hash.txt${RESET}"
@@ -181,22 +181,22 @@ hash_cracking_demo() {
     echo ""
     echo -e "${GREEN}  SIMULASI DICTIONARY ATTACK SEDERHANA:${RESET}"
     echo ""
-    echo -ne "${WHITE}  Masukkan hash MD5 yang ingin di-crack: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_ENTER_HASH${RESET}"
     read -r target_hash
     
     if [[ -n "$target_hash" ]]; then
         common_words=("password" "123456" "admin" "qwerty" "letmein" "welcome" "monkey" "dragon" "pass" "hello" "world" "test" "root" "toor" "secret")
         echo ""
-        echo -e "${CYAN}  Mencoba dictionary attack dengan kata umum...${RESET}"
+        echo -e "${CYAN}  $CT_C_TRYING_DICT${RESET}"
         found=false
         for word in "${common_words[@]}"; do
             if command -v md5sum &>/dev/null; then
                 hash_calc=$(echo -n "$word" | md5sum | cut -d' ' -f1)
-                echo -e "${WHITE}  Mencoba: $word -> $hash_calc${RESET}"
+                echo -e "${WHITE}  $CT_C_TRYING $word -> $hash_calc${RESET}"
                 sleep 0.1
                 if [[ "$hash_calc" == "${target_hash,,}" ]]; then
                     echo ""
-                    echo -e "${RED}  [CRACK BERHASIL] Password ditemukan: $word${RESET}"
+                    echo -e "${RED}  $CT_C_CRACK_SUCCESS $word${RESET}"
                     found=true
                     break
                 fi
@@ -204,8 +204,8 @@ hash_cracking_demo() {
         done
         if [[ "$found" == false ]]; then
             echo ""
-            echo -e "${YELLOW}  Password tidak ditemukan dalam wordlist kecil ini.${RESET}"
-            echo -e "${WHITE}  Dalam praktik nyata, rockyou.txt berisi 14 juta kata!${RESET}"
+            echo -e "${YELLOW}  $CT_C_NOT_FOUND${RESET}"
+            echo -e "${WHITE}  $CT_C_IN_PRACTICE${RESET}"
         fi
     fi
     press_enter
@@ -216,28 +216,28 @@ password_generator() {
     echo -e "${CYAN}  GENERATOR PASSWORD KUAT${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Mari buat password yang kuat menggunakan berbagai metode.${RESET}"
+    echo -e "${WHITE}  $CT_C_GEN_INTRO${RESET}"
     echo ""
-    echo -e "${GREEN}  METODE MEMBUAT PASSWORD KUAT:${RESET}"
+    echo -e "${GREEN}  $CT_C_GEN_METHODS${RESET}"
     echo ""
     echo -e "${YELLOW}  1. Passphrase (lebih mudah diingat dan kuat)${RESET}"
     echo -e "${WHITE}     Gabungkan 4-5 kata random dengan pemisah.${RESET}"
     echo -e "${WHITE}     Contoh: correct-horse-battery-staple${RESET}"
     echo -e "${WHITE}     Lebih kuat dari: Tr0ub4dor&3${RESET}"
     echo ""
-    echo -e "${GREEN}  GENERATE PASSWORD RANDOM:${RESET}"
+    echo -e "${GREEN}  $CT_C_GEN_RANDOM${RESET}"
     echo ""
-    echo -ne "${WHITE}  Panjang password yang diinginkan (8-64): ${RESET}"
+    echo -ne "${WHITE}  $CT_C_ENTER_LEN${RESET}"
     read -r pass_len
     
     if [[ "$pass_len" =~ ^[0-9]+$ ]] && [[ $pass_len -ge 8 ]] && [[ $pass_len -le 64 ]]; then
         echo ""
         if command -v openssl &>/dev/null; then
-            echo -e "${GREEN}  Password Random (huruf+angka+simbol):${RESET}"
+            echo -e "${GREEN}  $CT_C_RAND_PWD${RESET}"
             openssl rand -base64 $((pass_len * 3 / 4 + 1)) | tr -d '\n' | head -c "$pass_len"
             echo ""
             echo ""
-            echo -e "${GREEN}  Password Hex:${RESET}"
+            echo -e "${GREEN}  $CT_C_HEX_PWD${RESET}"
             openssl rand -hex $((pass_len / 2 + 1)) | head -c "$pass_len"
             echo ""
         else
@@ -246,10 +246,10 @@ password_generator() {
             echo ""
         fi
         echo ""
-        echo -e "${YELLOW}  SIMPAN DI PASSWORD MANAGER!${RESET}"
-        echo -e "${WHITE}  Rekomendasi: Bitwarden, KeePass, 1Password${RESET}"
+        echo -e "${YELLOW}  $CT_C_SAVE_TO_PM${RESET}"
+        echo -e "${WHITE}  $CT_C_PM_RECO${RESET}"
     else
-        echo -e "${RED}  Input tidak valid. Masukkan angka 8-64.${RESET}"
+        echo -e "${RED}  $CT_C_INVALID_INPUT${RESET}"
     fi
     press_enter
 }
@@ -266,7 +266,7 @@ while true; do
     echo -e "${GREEN}  [4] $CT_M7_4${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih topik: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
     read -r pilihan
     case $pilihan in
         1) teori_password ;;

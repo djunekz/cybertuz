@@ -8,7 +8,7 @@ if [ -z "$CYBERTUZ_LANG" ]; then
     ct_load_lang || _ct_set_lang "en"
 fi
 
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+press_enter() { echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                SOCIAL ENGINEERING AWARENESS"; echo "  ================================================================="; echo -e "${RESET}"; }
 
 teori_se() {
@@ -16,34 +16,34 @@ teori_se() {
     echo -e "${CYAN}  APA ITU SOCIAL ENGINEERING?${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Social engineering adalah manipulasi psikologis terhadap manusia${RESET}"
-    echo -e "${WHITE}  untuk mendapatkan informasi rahasia atau akses ke sistem.${RESET}"
+    echo -e "${WHITE}  $CT_C_SE_DEF${RESET}"
+    
     echo ""
-    echo -e "${YELLOW}  'The weakest link in security is always human.' - Kevin Mitnick${RESET}"
+    echo -e "${YELLOW}  $CT_C_SE_QUOTE${RESET}"
     echo ""
-    echo -e "${GREEN}  PRINSIP PSIKOLOGIS YANG DIEKSPLOITASI:${RESET}"
+    echo -e "${GREEN}  $CT_C_PSY_PRINCIPLES${RESET}"
     echo ""
-    echo -e "${YELLOW}  1. Authority (Otoritas)${RESET}"
+    echo -e "${YELLOW}  $CT_C_AUTHORITY${RESET}"
     echo -e "${WHITE}     Pura-pura menjadi atasan, IT support, atau pejabat.${RESET}"
     echo -e "${WHITE}     Contoh: 'Saya dari IT department, saya perlu password Anda'${RESET}"
     echo ""
-    echo -e "${YELLOW}  2. Urgency (Urgensi)${RESET}"
+    echo -e "${YELLOW}  $CT_C_URGENCY${RESET}"
     echo -e "${WHITE}     Menciptakan rasa panik agar korban tidak berpikir panjang.${RESET}"
     echo -e "${WHITE}     Contoh: 'Akun Anda akan diblokir dalam 1 jam!'${RESET}"
     echo ""
-    echo -e "${YELLOW}  3. Social Proof (Bukti Sosial)${RESET}"
+    echo -e "${YELLOW}  $CT_C_SOCIAL_PROOF${RESET}"
     echo -e "${WHITE}     Memanfaatkan kecenderungan mengikuti kelompok.${RESET}"
     echo -e "${WHITE}     Contoh: 'Semua kolega sudah klik link ini'${RESET}"
     echo ""
-    echo -e "${YELLOW}  4. Reciprocity (Timbal Balik)${RESET}"
+    echo -e "${YELLOW}  $CT_C_RECIPROCITY${RESET}"
     echo -e "${WHITE}     Memberi sesuatu dulu agar korban merasa berutang.${RESET}"
     echo -e "${WHITE}     Contoh: Beri hadiah kecil sebelum minta info${RESET}"
     echo ""
-    echo -e "${YELLOW}  5. Liking (Rasa Suka)${RESET}"
+    echo -e "${YELLOW}  $CT_C_LIKING${RESET}"
     echo -e "${WHITE}     Membangun hubungan dan kepercayaan dulu.${RESET}"
     echo -e "${WHITE}     Contoh: Berpura-pura teman lama di media sosial${RESET}"
     echo ""
-    echo -e "${YELLOW}  6. Scarcity (Kelangkaan)${RESET}"
+    echo -e "${YELLOW}  $CT_C_SCARCITY${RESET}"
     echo -e "${WHITE}     Menciptakan penawaran terbatas.${RESET}"
     echo -e "${WHITE}     Contoh: 'Penawaran hanya untuk 10 orang pertama!'${RESET}"
     press_enter
@@ -54,10 +54,10 @@ phishing_awareness() {
     echo -e "${CYAN}  PHISHING - DETEKSI DAN PENCEGAHAN${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Phishing adalah upaya penipuan untuk mencuri informasi sensitif${RESET}"
-    echo -e "${WHITE}  dengan berpura-pura menjadi entitas terpercaya.${RESET}"
+    echo -e "${WHITE}  $CT_C_PHISHING_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  JENIS PHISHING:${RESET}"
+    echo -e "${GREEN}  $CT_C_PHISHING_TYPES${RESET}"
     echo ""
     echo -e "${YELLOW}  Email Phishing${RESET}"
     echo -e "${WHITE}  Kirim email palsu seolah dari bank, Google, atau perusahaan besar.${RESET}"
@@ -76,7 +76,7 @@ phishing_awareness() {
     echo -e "${YELLOW}  Vishing (Voice Phishing)${RESET}"
     echo -e "${WHITE}  Phishing melalui telepon. Pura-pura jadi bank atau pemerintah.${RESET}"
     echo ""
-    echo -e "${GREEN}  TANDA-TANDA EMAIL PHISHING:${RESET}"
+    echo -e "${GREEN}  $CT_C_PHISHING_SIGNS${RESET}"
     echo -e "${WHITE}  - Domain pengirim mencurigakan (paypa1.com bukan paypal.com)${RESET}"
     echo -e "${WHITE}  - Tata bahasa buruk atau terlalu formal${RESET}"
     echo -e "${WHITE}  - Urgent/minta tindakan segera${RESET}"
@@ -84,7 +84,7 @@ phishing_awareness() {
     echo -e "${WHITE}  - Attachment tidak diminta${RESET}"
     echo -e "${WHITE}  - Minta informasi sensitif via email${RESET}"
     echo ""
-    echo -e "${GREEN}  SIMULASI DETEKSI PHISHING:${RESET}"
+    echo -e "${GREEN}  $CT_C_PHISHING_SIM${RESET}"
     echo ""
     declare -a emails=(
         "support@paypa1.com"
@@ -96,18 +96,18 @@ phishing_awareness() {
     )
     declare -a verdict=("PHISHING" "AMAN" "PHISHING" "AMAN" "PHISHING" "AMAN")
     
-    echo -e "${WHITE}  Coba identifikasi mana yang phishing:${RESET}"
+    echo -e "${WHITE}  $CT_C_PHISHING_TRY${RESET}"
     echo ""
     for i in "${!emails[@]}"; do
         echo -e "${CYAN}  Email $((i+1)): ${emails[$i]}${RESET}"
-        echo -ne "${WHITE}  Phishing atau Aman? (p/a): ${RESET}"
+        echo -ne "${WHITE}  $CT_C_PHISHING_ASK${RESET}"
         read -r answer
         if [[ "$answer" == "p" && "${verdict[$i]}" == "PHISHING" ]] || [[ "$answer" == "a" && "${verdict[$i]}" == "AMAN" ]]; then
             echo -e "${GREEN}  [$CT_CORRECT] ${verdict[$i]}${RESET}"
         else
             echo -e "${RED}  [$CT_WRONG] $CT_ANS: ${verdict[$i]}${RESET}"
             if [[ "${verdict[$i]}" == "PHISHING" ]]; then
-                echo -e "${WHITE}  Domain ini mencurigakan karena tidak resmi.${RESET}"
+                echo -e "${WHITE}  $CT_C_DOM_SUSPICIOUS${RESET}"
             fi
         fi
         echo ""
@@ -120,15 +120,15 @@ pretexting() {
     echo -e "${CYAN}  PRETEXTING - PENCIPTAAN SKENARIO PALSU${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Pretexting adalah membuat skenario palsu yang meyakinkan${RESET}"
-    echo -e "${WHITE}  untuk mendapatkan informasi dari target.${RESET}"
+    echo -e "${WHITE}  $CT_C_PRETEXTING_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  SKENARIO PRETEXTING UMUM:${RESET}"
+    echo -e "${GREEN}  $CT_C_COMMON_SCENARIOS${RESET}"
     echo ""
-    echo -e "${YELLOW}  Skenario IT Support:${RESET}"
-    echo -e "${WHITE}  'Halo, saya dari helpdesk IT. Ada masalah dengan akun Anda.${RESET}"
-    echo -e "${WHITE}  Saya perlu password sementara untuk reset akun Anda.'${RESET}"
-    echo -e "${RED}  BAHAYA: IT support yang sah TIDAK PERNAH minta password!${RESET}"
+    echo -e "${YELLOW}  $CT_C_IT_SCEN${RESET}"
+    echo -e "${WHITE}  $CT_C_IT_SCEN_MSG${RESET}"
+    
+    echo -e "${RED}  $CT_C_IT_SCEN_WARN${RESET}"
     echo ""
     echo -e "${YELLOW}  Skenario Audit:${RESET}"
     echo -e "${WHITE}  'Saya dari tim audit eksternal. Saya perlu akses ke ruang server.'${RESET}"
@@ -138,7 +138,7 @@ pretexting() {
     echo -e "${WHITE}  Survey online yang mengumpulkan info seperti nama ibu kandung,${RESET}"
     echo -e "${WHITE}  nama hewan peliharaan - pertanyaan keamanan umum bank!${RESET}"
     echo ""
-    echo -e "${GREEN}  CARA MELINDUNGI DIRI:${RESET}"
+    echo -e "${GREEN}  $CT_C_PROTECT_SELF${RESET}"
     echo -e "${WHITE}  - Verifikasi identitas sebelum berbagi informasi${RESET}"
     echo -e "${WHITE}  - Jangan berikan password kepada siapapun (termasuk IT)${RESET}"
     echo -e "${WHITE}  - Ikuti prosedur keamanan perusahaan${RESET}"
@@ -158,7 +158,7 @@ while true; do
     echo -e "${GREEN}  [3] $CT_M8_3${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih topik: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
     read -r pilihan
     case $pilihan in
         1) teori_se ;;

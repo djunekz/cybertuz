@@ -8,7 +8,7 @@ if [ -z "$CYBERTUZ_LANG" ]; then
     ct_load_lang || _ct_set_lang "en"
 fi
 
-press_enter() { echo ""; echo -e "${YELLOW}  Tekan ENTER untuk melanjutkan...${RESET}"; read -r; }
+press_enter() { echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
 header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "               NETWORK SECURITY & FIREWALL"; echo "  ================================================================="; echo -e "${RESET}"; }
 
 teori_firewall() {
@@ -16,27 +16,27 @@ teori_firewall() {
     echo -e "${CYAN}  FIREWALL - PERTAHANAN JARINGAN${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  Firewall adalah sistem keamanan yang memantau dan mengontrol${RESET}"
-    echo -e "${WHITE}  traffic jaringan berdasarkan aturan keamanan yang ditentukan.${RESET}"
+    echo -e "${WHITE}  $CT_C_FW_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  JENIS FIREWALL:${RESET}"
+    echo -e "${GREEN}  $CT_C_FW_TYPES${RESET}"
     echo ""
-    echo -e "${YELLOW}  1. Packet Filter Firewall${RESET}"
+    echo -e "${YELLOW}  $CT_C_FW_PKT${RESET}"
     echo -e "${WHITE}     Memeriksa header paket (IP, port, protokol).${RESET}"
     echo -e "${WHITE}     Cepat tapi tidak bisa lihat isi paket.${RESET}"
     echo ""
-    echo -e "${YELLOW}  2. Stateful Inspection Firewall${RESET}"
+    echo -e "${YELLOW}  $CT_C_FW_SPI${RESET}"
     echo -e "${WHITE}     Melacak state koneksi (apakah ini bagian dari session sah?).${RESET}"
     echo -e "${WHITE}     Lebih aman dari packet filter.${RESET}"
     echo ""
-    echo -e "${YELLOW}  3. Application Layer Firewall (WAF)${RESET}"
+    echo -e "${YELLOW}  $CT_C_FW_APP${RESET}"
     echo -e "${WHITE}     Menganalisis konten aplikasi (HTTP, SQL, dll).${RESET}"
     echo -e "${WHITE}     Dapat mencegah SQLi, XSS, dll.${RESET}"
     echo ""
-    echo -e "${YELLOW}  4. Next-Generation Firewall (NGFW)${RESET}"
+    echo -e "${YELLOW}  $CT_C_FW_NGFW${RESET}"
     echo -e "${WHITE}     Menggabungkan semua tipe + IPS, DPI, User Identity.${RESET}"
     echo ""
-    echo -e "${GREEN}  IPTABLES - FIREWALL LINUX:${RESET}"
+    echo -e "${GREEN}  $CT_C_IPTABLES_HDR${RESET}"
     echo ""
     echo -e "${WHITE}  Lihat rules aktif:${RESET}"
     echo -e "${YELLOW}  iptables -L -n -v${RESET}"
@@ -56,28 +56,28 @@ teori_firewall() {
 
 praktik_network_analysis() {
     header
-    echo -e "${CYAN}  ANALISIS JARINGAN LOKAL${RESET}"
+    echo -e "${CYAN}  $CT_C_NET_ANALYSIS${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${GREEN}  CEK KONEKSI AKTIF:${RESET}"
+    echo -e "${GREEN}  $CT_C_ACTIVE_CONN${RESET}"
     echo ""
     if command -v netstat &>/dev/null; then
-        echo -e "${CYAN}  Koneksi jaringan aktif:${RESET}"
+        echo -e "${CYAN}  $CT_C_ACTIVE_CONN${RESET}"
         netstat -tuln 2>/dev/null | head -20
     elif command -v ss &>/dev/null; then
-        echo -e "${CYAN}  Koneksi jaringan aktif:${RESET}"
+        echo -e "${CYAN}  $CT_C_ACTIVE_CONN${RESET}"
         ss -tuln 2>/dev/null | head -20
     fi
     echo ""
-    echo -e "${GREEN}  INFORMASI ROUTING:${RESET}"
+    echo -e "${GREEN}  $CT_C_ROUTING${RESET}"
     if command -v ip &>/dev/null; then
         ip route 2>/dev/null | head -10
     fi
     echo ""
-    echo -e "${GREEN}  DNS YANG DIGUNAKAN:${RESET}"
+    echo -e "${GREEN}  $CT_C_DNS_USED${RESET}"
     cat /etc/resolv.conf 2>/dev/null | grep nameserver | head -5
     echo ""
-    echo -e "${GREEN}  ARP TABLE (Device di jaringan lokal):${RESET}"
+    echo -e "${GREEN}  $CT_C_ARP_TABLE${RESET}"
     if command -v arp &>/dev/null; then
         arp -a 2>/dev/null | head -15
     fi
@@ -89,10 +89,10 @@ mitm_awareness() {
     echo -e "${CYAN}  MAN-IN-THE-MIDDLE ATTACK${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
-    echo -e "${WHITE}  MitM adalah serangan dimana penyerang berada di antara${RESET}"
-    echo -e "${WHITE}  dua pihak yang berkomunikasi tanpa sepengetahuan mereka.${RESET}"
+    echo -e "${WHITE}  $CT_C_MITM_DEF${RESET}"
+    
     echo ""
-    echo -e "${GREEN}  TEKNIK MitM:${RESET}"
+    echo -e "${GREEN}  $CT_C_MITM_TECHNIQUES${RESET}"
     echo ""
     echo -e "${YELLOW}  1. ARP Spoofing/Poisoning${RESET}"
     echo -e "${WHITE}     Mengirim ARP reply palsu untuk mengarahkan traffic ke penyerang.${RESET}"
@@ -109,7 +109,7 @@ mitm_awareness() {
     echo -e "${YELLOW}  4. Evil Twin (Wi-Fi)${RESET}"
     echo -e "${WHITE}     Membuat hotspot palsu dengan nama sama seperti asli.${RESET}"
     echo ""
-    echo -e "${GREEN}  PENCEGAHAN MitM:${RESET}"
+    echo -e "${GREEN}  $CT_C_MITM_PREV${RESET}"
     echo -e "${WHITE}  - Gunakan HTTPS (pastikan ada kunci di browser)${RESET}"
     echo -e "${WHITE}  - Verifikasi certificate SSL${RESET}"
     echo -e "${WHITE}  - Hindari Wi-Fi publik untuk transaksi sensitif${RESET}"
@@ -130,7 +130,7 @@ while true; do
     echo -e "${GREEN}  [3] $CT_M9_3${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  Pilih topik: ${RESET}"
+    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
     read -r pilihan
     case $pilihan in
         1) teori_firewall ;;
