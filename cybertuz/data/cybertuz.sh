@@ -39,7 +39,10 @@ banner() {
     echo -e "${CYAN}  =================================================================${RESET}"
     echo -e "${WHITE}        $CT_SUBTITLE${RESET}"
     echo -e "${YELLOW}        $CT_FOR_EDU${RESET}"
-    echo -e "${DIM}        Language: $CT_LANG_NAME${RESET}"
+    echo -e "${WHITE}${DIM}        Official Developer : ${GREEN}djunekz${RESET}"
+    echo -e "${WHITE}${DIM}        Open Contributing  : ${GREEN}https://github.com/djunekz/cybertuz${RESET}"
+    echo -e "${WHITE}${DIM}        Information Tools  : ${YELLOW}OpenSource with MIT License${RESET}"
+    echo -e "${WHITE}${DIM}        Language: ${YELLOW}$CT_LANG_NAME${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
 }
