@@ -14,6 +14,24 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and 
 
 ---
 
+---
+
+## [1.0.2] - 2026-04-25
+
+### Update
+- **Support English Language** — Next change 02, 03, 13, 14, 15, 16, 17
+  - modules/01_teori_dasar.sh
+  - modules/04_vulnerability.sh
+  - modules/05_web_security.sh
+  - modules/06_kriptografi.sh
+  - modules/07_password_security.sh
+  - modules/08_social_engineering.sh
+  - modules/09_network_security.sh
+  - modules/10_wireless_security.sh
+  - modules/11_forensik.sh
+  - modules/12_malware_analysis.sh
+
+---
 ## [1.0.1] - 2026
 
 ### Added
