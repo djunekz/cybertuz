@@ -1,128 +1,111 @@
 #!/bin/bash
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; WHITE='\033[1;37m'; RESET='\033[0m'
-
 CYBERTUZ_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CYBERTUZ_LOG_DIR="$CYBERTUZ_DIR/logs"
-if [ -z "$CYBERTUZ_LANG" ]; then
-    source "$CYBERTUZ_DIR/lang.sh"
-    ct_load_lang || _ct_set_lang "en"
-fi
-
+if [ -z "$CYBERTUZ_LANG" ]; then source "$CYBERTUZ_DIR/lang.sh"; ct_load_lang || _ct_set_lang "en"; fi
 press_enter() { echo ""; echo -e "${YELLOW}  $CT_ENTER${RESET}"; read -r; }
-header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "               NETWORK SECURITY & FIREWALL"; echo "  ================================================================="; echo -e "${RESET}"; }
+header() { clear; echo -e "${RED}"; echo "  ================================================================="; echo "                $CT_C_M9_HDR"; echo "  ================================================================="; echo -e "${RESET}"; }
 
-teori_firewall() {
+firewall_module() {
     header
-    echo -e "${CYAN}  FIREWALL - PERTAHANAN JARINGAN${RESET}"
-    echo -e "${CYAN}  =================================================================${RESET}"
+    echo -e "${CYAN}  $CT_C_M9_FW_HDR${RESET}"
     echo ""
-    echo -e "${WHITE}  $CT_C_FW_DEF${RESET}"
-    
+    echo -e "${WHITE}  $CT_C_M9_FW_DEF${RESET}"
     echo ""
-    echo -e "${GREEN}  $CT_C_FW_TYPES${RESET}"
+    echo -e "${GREEN}  $CT_C_M9_FW_TYPES${RESET}"
     echo ""
-    echo -e "${YELLOW}  $CT_C_FW_PKT${RESET}"
-    echo -e "${WHITE}     Memeriksa header paket (IP, port, protokol).${RESET}"
-    echo -e "${WHITE}     Cepat tapi tidak bisa lihat isi paket.${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_FW1${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_FW1_DESC${RESET}"
     echo ""
-    echo -e "${YELLOW}  $CT_C_FW_SPI${RESET}"
-    echo -e "${WHITE}     Melacak state koneksi (apakah ini bagian dari session sah?).${RESET}"
-    echo -e "${WHITE}     Lebih aman dari packet filter.${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_FW2${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_FW2_DESC${RESET}"
     echo ""
-    echo -e "${YELLOW}  $CT_C_FW_APP${RESET}"
-    echo -e "${WHITE}     Menganalisis konten aplikasi (HTTP, SQL, dll).${RESET}"
-    echo -e "${WHITE}     Dapat mencegah SQLi, XSS, dll.${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_FW3${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_FW3_DESC${RESET}"
     echo ""
-    echo -e "${YELLOW}  $CT_C_FW_NGFW${RESET}"
-    echo -e "${WHITE}     Menggabungkan semua tipe + IPS, DPI, User Identity.${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_FW4${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_FW4_DESC${RESET}"
     echo ""
-    echo -e "${GREEN}  $CT_C_IPTABLES_HDR${RESET}"
+    echo -e "${GREEN}  $CT_C_M9_IPTABLES${RESET}"
     echo ""
-    echo -e "${WHITE}  Lihat rules aktif:${RESET}"
-    echo -e "${YELLOW}  iptables -L -n -v${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_VIEW_RULES${RESET}"
+    echo -e "${CYAN}  iptables -L -n -v${RESET}"
     echo ""
-    echo -e "${WHITE}  Blokir IP tertentu:${RESET}"
-    echo -e "${YELLOW}  iptables -A INPUT -s 192.168.1.100 -j DROP${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_BLOCK_IP${RESET}"
+    echo -e "${CYAN}  iptables -A INPUT -s 192.168.1.100 -j DROP${RESET}"
     echo ""
-    echo -e "${WHITE}  Izinkan port tertentu:${RESET}"
-    echo -e "${YELLOW}  iptables -A INPUT -p tcp --dport 80 -j ACCEPT${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_ALLOW_PORT${RESET}"
+    echo -e "${CYAN}  iptables -A INPUT -p tcp --dport 22 -j ACCEPT${RESET}"
+    echo -e "${CYAN}  iptables -A INPUT -p tcp --dport 80 -j ACCEPT${RESET}"
+    echo -e "${CYAN}  iptables -A INPUT -p tcp --dport 443 -j ACCEPT${RESET}"
     echo ""
-    echo -e "${WHITE}  Blokir semua incoming, izinkan outgoing:${RESET}"
-    echo -e "${YELLOW}  iptables -P INPUT DROP${RESET}"
-    echo -e "${YELLOW}  iptables -P OUTPUT ACCEPT${RESET}"
-    echo -e "${YELLOW}  iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_BLOCK_ALL${RESET}"
+    echo -e "${CYAN}  iptables -P INPUT DROP${RESET}"
+    echo -e "${CYAN}  iptables -P OUTPUT ACCEPT${RESET}"
     press_enter
 }
 
-praktik_network_analysis() {
+net_analysis() {
     header
-    echo -e "${CYAN}  $CT_C_NET_ANALYSIS${RESET}"
-    echo -e "${CYAN}  =================================================================${RESET}"
+    echo -e "${CYAN}  $CT_C_M9_NET_ANALYSIS${RESET}"
     echo ""
-    echo -e "${GREEN}  $CT_C_ACTIVE_CONN${RESET}"
-    echo ""
-    if command -v netstat &>/dev/null; then
-        echo -e "${CYAN}  $CT_C_ACTIVE_CONN${RESET}"
-        netstat -tuln 2>/dev/null | head -20
-    elif command -v ss &>/dev/null; then
-        echo -e "${CYAN}  $CT_C_ACTIVE_CONN${RESET}"
-        ss -tuln 2>/dev/null | head -20
+    echo -e "${GREEN}  $CT_C_M9_ACTIVE_CONN${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_ACTIVE_LABEL${RESET}"
+    if command -v ss &>/dev/null; then
+        ss -tuln 2>/dev/null | head -12
+    elif command -v netstat &>/dev/null; then
+        netstat -tuln 2>/dev/null | head -12
     fi
     echo ""
-    echo -e "${GREEN}  $CT_C_ROUTING${RESET}"
-    if command -v ip &>/dev/null; then
-        ip route 2>/dev/null | head -10
-    fi
+    echo -e "${GREEN}  $CT_C_M9_ROUTING${RESET}"
+    ip route 2>/dev/null || route -n 2>/dev/null | head -8
     echo ""
-    echo -e "${GREEN}  $CT_C_DNS_USED${RESET}"
+    echo -e "${GREEN}  $CT_C_M9_DNS_USED${RESET}"
     cat /etc/resolv.conf 2>/dev/null | grep nameserver | head -5
     echo ""
-    echo -e "${GREEN}  $CT_C_ARP_TABLE${RESET}"
-    if command -v arp &>/dev/null; then
-        arp -a 2>/dev/null | head -15
-    fi
+    echo -e "${GREEN}  $CT_C_M9_ARP${RESET}"
+    arp -a 2>/dev/null | head -8 || ip neigh 2>/dev/null | head -8
     press_enter
 }
 
-mitm_awareness() {
+mitm_module() {
     header
-    echo -e "${CYAN}  MAN-IN-THE-MIDDLE ATTACK${RESET}"
-    echo -e "${CYAN}  =================================================================${RESET}"
+    echo -e "${CYAN}  $CT_C_M9_MITM_HDR${RESET}"
     echo ""
-    echo -e "${WHITE}  $CT_C_MITM_DEF${RESET}"
-    
+    echo -e "${WHITE}  $CT_C_M9_MITM_DEF${RESET}"
     echo ""
-    echo -e "${GREEN}  $CT_C_MITM_TECHNIQUES${RESET}"
+    echo -e "${GREEN}  $CT_C_M9_MITM_TECH${RESET}"
     echo ""
-    echo -e "${YELLOW}  1. ARP Spoofing/Poisoning${RESET}"
-    echo -e "${WHITE}     Mengirim ARP reply palsu untuk mengarahkan traffic ke penyerang.${RESET}"
-    echo -e "${WHITE}     Tool: arpspoof, ettercap${RESET}"
-    echo -e "${WHITE}     arpspoof -i eth0 -t 192.168.1.1 192.168.1.100${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_MITM_T1${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_MITM_T2${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_MITM_T3${RESET}"
+    echo -e "${YELLOW}  $CT_C_M9_MITM_T4${RESET}"
     echo ""
-    echo -e "${YELLOW}  2. DNS Spoofing${RESET}"
-    echo -e "${WHITE}     Memanipulasi cache DNS untuk mengarahkan ke IP palsu.${RESET}"
+    echo -e "${GREEN}  MitM $CT_NOTE - HOW IT LOOKS:${RESET}"
     echo ""
-    echo -e "${YELLOW}  3. SSL Stripping${RESET}"
-    echo -e "${WHITE}     Downgrade HTTPS ke HTTP untuk intercept traffic terenkripsi.${RESET}"
-    echo -e "${WHITE}     Tool: sslstrip${RESET}"
+    echo "  Client                 Attacker               Server"
+    echo "    |---SYN------------>|                         |"
+    echo "    |                   |---SYN----------------->|"
+    echo "    |<--SYN-ACK---------|                         |"
+    echo "    |                   |<--SYN-ACK--------------|"
+    echo "    |====TRAFFIC=======>|====TRAFFIC============>|"
+    echo "    |<====TRAFFIC=======|<===TRAFFIC=============|"
+    echo "            ^^^INTERCEPTED BY ATTACKER^^^"
     echo ""
-    echo -e "${YELLOW}  4. Evil Twin (Wi-Fi)${RESET}"
-    echo -e "${WHITE}     Membuat hotspot palsu dengan nama sama seperti asli.${RESET}"
+    echo -e "${GREEN}  $CT_C_M9_MITM_PREV${RESET}"
     echo ""
-    echo -e "${GREEN}  $CT_C_MITM_PREV${RESET}"
-    echo -e "${WHITE}  - Gunakan HTTPS (pastikan ada kunci di browser)${RESET}"
-    echo -e "${WHITE}  - Verifikasi certificate SSL${RESET}"
-    echo -e "${WHITE}  - Hindari Wi-Fi publik untuk transaksi sensitif${RESET}"
-    echo -e "${WHITE}  - Gunakan VPN${RESET}"
-    echo -e "${WHITE}  - HTTP Strict Transport Security (HSTS)${RESET}"
-    echo -e "${WHITE}  - Certificate pinning di aplikasi mobile${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P1${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P2${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P3${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P4${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P5${RESET}"
+    echo -e "${WHITE}  $CT_C_M9_MITM_P6${RESET}"
     press_enter
 }
 
 while true; do
     header
     echo -e "${CYAN}  =================================================================${RESET}"
-    echo -e "${WHITE}               NETWORK SECURITY & FIREWALL${RESET}"
+    echo -e "${WHITE}              $CT_C_M9_HDR${RESET}"
     echo -e "${CYAN}  =================================================================${RESET}"
     echo ""
     echo -e "${GREEN}  [1] $CT_M9_1${RESET}"
@@ -130,13 +113,9 @@ while true; do
     echo -e "${GREEN}  [3] $CT_M9_3${RESET}"
     echo -e "${YELLOW}  [0] $CT_BACK${RESET}"
     echo ""
-    echo -ne "${WHITE}  $CT_C_CHOOSE_TOPIC${RESET}"
-    read -r pilihan
+    echo -ne "${WHITE}  $CT_MPROMPT${RESET}"; read -r pilihan
     case $pilihan in
-        1) teori_firewall ;;
-        2) praktik_network_analysis ;;
-        3) mitm_awareness ;;
-        0) exit 0 ;;
-        *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
+        1) firewall_module ;; 2) net_analysis ;; 3) mitm_module ;;
+        0) exit 0 ;; *) echo -e "${RED}  $CT_INVALID${RESET}"; sleep 1 ;;
     esac
 done
